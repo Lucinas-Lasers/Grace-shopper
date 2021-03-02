@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Wishlist = db.define('wishlist', {
-  products: {
+  wishlistProducts: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
     allowNull: false,
     validate: {

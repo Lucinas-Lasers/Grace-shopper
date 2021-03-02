@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Cart = db.define('cart', {
-  products: {
+  cartProducts: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
     allowNull: false,
     validate: {
