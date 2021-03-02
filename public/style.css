@@ -19,3 +19,12 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.cartList {
+}
+
+.cartItem {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: rgb(173, 173, 173);
+}
