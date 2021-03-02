@@ -23,7 +23,7 @@ const Product = db.define('product', {
     }
   },
   price: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     allowNull: false,
     validate: {
       notEmpty: true
@@ -41,21 +41,32 @@ const Product = db.define('product', {
     allowNull: false,
     validate: {
       requiredFields() {
-        if (this.type === 'Record' && !this.albumTitle) {
-          throw new Error('Requires album title')
+        if (this.type === 'Record') {
+          if (!this.albumTitle || !this.artist || !this.genre || !this.tracks)
+            throw new Error('Requires album title')
         }
       }
     }
   },
-  // year: {
-  //   type: Sequelize.STRING,
-  //   allowNull: false,
-  //   validate: {
-  //     notEmpty: true,
-  //   },
-  // },
+  year: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+
   albumTitle: {
     type: Sequelize.STRING
+  },
+  artist: {
+    type: Sequelize.STRING
+  },
+  genre: {
+    type: Sequelize.STRING
+  },
+  tracks: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   }
 })
 
