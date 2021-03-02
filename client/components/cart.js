@@ -5,7 +5,7 @@ const dummy = [
     name: 'album1',
     img: 'https://i.imgur.com/QErPh1R.png',
     description: 'Mooo-sic',
-    price: '5.99',
+    price: 5.99,
     qty: '100000',
     productAmount: 2,
     year: '2000',
@@ -18,7 +18,7 @@ const dummy = [
     name: 'album2',
     img: 'https://i.imgur.com/QErPh1R.png',
     description: 'Mooo-sic',
-    price: '5.99',
+    price: 5.99,
     qty: '100000',
     productAmount: 1,
     year: '2000',
@@ -32,28 +32,28 @@ const dummy = [
 export class Cart extends React.Component {
   constructor() {
     super()
-    this.state = dummy
+    this.state = {historyArray: dummy}
     this.handleChange = this.handleChange.bind(this)
   }
   handleChange(e, indx) {
-    let item = this.state
+    let item = this.state.historyArray
     item[indx].productAmount = e.target.value
-    this.setState([item])
-    console.log(this.state)
+    this.setState({historyArray: item})
   }
 
   render() {
-    console.log(this.state)
+    // const overallPrice =
+    // console.log(overallPrice)
     return (
       <div className="cartList">
-        {this.state.map((item, indx) => {
+        {this.state.historyArray.map((item, indx) => {
           return (
             <div className="cartItem" key="1">
               <div>{item.name}</div>
               <img src={item.img} />
               <div>
                 <label htmlFor={item.name}>
-                  <small>amount</small>
+                  <small>Quantity</small>
                 </label>
                 <input
                   name={item.name}
@@ -65,6 +65,14 @@ export class Cart extends React.Component {
             </div>
           )
         })}
+        <div>
+          Price:{' '}
+          {this.state.historyArray
+            .reduce((accumulator, current) => {
+              return accumulator + current.productAmount * current.price
+            }, 0)
+            .toFixed(2)}
+        </div>
       </div>
     )
   }
