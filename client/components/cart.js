@@ -34,11 +34,18 @@ export class Cart extends React.Component {
     super()
     this.state = {historyArray: dummy}
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleChange(e, indx) {
     let item = this.state.historyArray
     item[indx].productAmount = e.target.value
     this.setState({historyArray: item})
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    console.log('submitted')
+    this.setState({historyArray: []})
   }
 
   render() {
@@ -73,6 +80,9 @@ export class Cart extends React.Component {
             }, 0)
             .toFixed(2)}
         </div>
+        <form onSubmit={this.handleSubmit}>
+          <input type="submit" value="Purchase" />
+        </form>
       </div>
     )
   }
