@@ -66,7 +66,7 @@ const Product = db.define('product', {
     type: Sequelize.STRING
   },
   tracks: {
-    type: Sequelize.ARRAY(Sequelize.STRING)
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   }
 })
 
