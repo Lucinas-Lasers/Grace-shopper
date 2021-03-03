@@ -8,12 +8,14 @@ import cart from './cart'
 
 import recordReducer from './record'
 import singleRecordReducer from './singleRecord'
+import allRecordPlayerReducer from './allRecordPlayers'
 
 const reducer = combineReducers({
   user,
   cart,
   recordReducer,
-  singleRecordReducer
+  singleRecordReducer,
+  allRecordPlayerReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
