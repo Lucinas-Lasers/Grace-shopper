@@ -36,10 +36,10 @@ export const fetchAllRecords = () => async dispatch => {
  */
 
 export default function(state = defaultRecords, action) {
+  console.log(action)
   switch (action.type) {
     case GET_ALL_RECORDS:
       return action.records
-
     default:
       return state
   }
