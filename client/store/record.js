@@ -24,7 +24,7 @@ export const getAllRecords = records => ({type: GET_ALL_RECORDS, records})
 
 export const fetchAllRecords = () => async dispatch => {
   try {
-    const {data} = await axios.get('/api/records')
+    const {data} = await axios.get('/api/products/type/Record')
     dispatch(getAllRecords(data))
   } catch (err) {
     console.error(err)
@@ -36,7 +36,6 @@ export const fetchAllRecords = () => async dispatch => {
  */
 
 export default function(state = defaultRecords, action) {
-  console.log(action)
   switch (action.type) {
     case GET_ALL_RECORDS:
       return action.records

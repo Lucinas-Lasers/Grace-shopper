@@ -7,8 +7,18 @@ import user from './user'
 import cart from './cart'
 
 import recordReducer from './record'
+import singleRecordReducer from './singleRecord'
+import allRecordPlayerReducer from './allRecordPlayers'
+import singleRecordPlayerReducer from './singleRecordPlayer'
 
-const reducer = combineReducers({user, cart, recordReducer})
+const reducer = combineReducers({
+  user,
+  cart,
+  recordReducer,
+  singleRecordReducer,
+  allRecordPlayerReducer,
+  singleRecordPlayerReducer
+})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

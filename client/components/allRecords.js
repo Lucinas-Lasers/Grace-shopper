@@ -32,9 +32,15 @@ class AllRecords extends React.Component {
 
   render() {
     return this.props.allRecords[0] ? (
-      <div>
+      <div className="albumList">
         {this.props.allRecords.map(element => {
-          return <img src={element.image} key={element.id} />
+          return (
+            <div key={element.id} className="album">
+              <img src={element.image} />
+              <h1>{element.name}</h1>
+              <h1>{element.artist}</h1>
+            </div>
+          )
         })}
       </div>
     ) : (
