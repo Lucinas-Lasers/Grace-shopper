@@ -24,7 +24,7 @@ export const getSingleRecord = record => ({type: GET_SINGLE_RECORD, record})
 
 export const fetchSingleRecord = id => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/records/${id}`)
+    const {data} = await axios.get(`/api/products/${id}`)
     dispatch(getSingleRecord(data))
   } catch (err) {
     console.error(err)

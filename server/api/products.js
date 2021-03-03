@@ -2,11 +2,15 @@ const router = require('express').Router()
 const Product = require('../db/models/product')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/type/:type', async (req, res, next) => {
   try {
-    const allRecords = await Product.findAll({where: {type: 'Record'}})
+    // axios request has to be api/products/record recordPlayer
 
-    res.json(allRecords)
+    const recordPlayer = await Product.findAll({
+      where: {type: `${req.params.type}`}
+    })
+
+    res.json(recordPlayer)
   } catch (err) {
     next(err)
   }
