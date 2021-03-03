@@ -9,7 +9,8 @@ import {
   Cart,
   allRecords,
   singleRecord,
-  allRecordPlayers
+  allRecordPlayers,
+  singleRecordPlayer
 } from './components'
 import {me} from './store'
 
@@ -33,6 +34,7 @@ class Routes extends Component {
         <Route path="/allRecords" component={allRecords} />
         <Route path="/record/:id" component={singleRecord} />
         <Route path="/recordplayers" component={allRecordPlayers} />
+        <Route path="/recordplayer/:id" component={singleRecordPlayer} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
