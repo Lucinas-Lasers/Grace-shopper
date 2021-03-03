@@ -33,10 +33,10 @@ export const me = () => async dispatch => {
 export const auth = (
   email,
   password,
+  method,
   firstName,
   middleName,
-  lastName,
-  method
+  lastName
 ) => async dispatch => {
   let res
   try {

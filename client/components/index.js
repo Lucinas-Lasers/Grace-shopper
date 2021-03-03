@@ -12,7 +12,6 @@ export {Login, Signup} from './auth-form'
 export {Cart}
 
 export {allRecords} from './allRecords'
-
 export {singleRecord} from './singleRecord'
 
 export {allRecordPlayers} from './allRecordPlayers'
