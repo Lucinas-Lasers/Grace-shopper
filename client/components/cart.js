@@ -1,5 +1,6 @@
 import React from 'react'
-
+import {connect} from 'react-redux'
+import {fetchCartInfo} from '../store/cart'
 const dummy = [
   {
     name: 'album1',
@@ -18,7 +19,7 @@ const dummy = [
     name: 'album2',
     img: 'https://i.imgur.com/QErPh1R.png',
     description: 'Mooo-sic',
-    price: 5.99,
+    price: 2.99,
     qty: '100000',
     productAmount: 1,
     year: '2000',
@@ -29,13 +30,18 @@ const dummy = [
   }
 ]
 
-export class Cart extends React.Component {
-  constructor() {
-    super()
+class Cart extends React.Component {
+  constructor(props) {
+    super(props)
     this.state = {historyArray: dummy}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+  async componentDidMount() {
+    let result = await this.props.cartInfo({userId: 2})
+    console.log('resu;t', result)
+  }
+
   handleChange(e, indx) {
     let item = this.state.historyArray
     item[indx].productAmount = e.target.value
@@ -49,6 +55,9 @@ export class Cart extends React.Component {
   }
 
   render() {
+    // console.log('this.props in render', this.props)
+    // console.log('this.props.cart in render', this.props.cartProducts)
+
     // const overallPrice =
     // console.log(overallPrice)
     return (
@@ -87,3 +96,15 @@ export class Cart extends React.Component {
     )
   }
 }
+
+const mapState = state => ({
+  cartProducts: state.products
+})
+
+const mapDispatch = dispatch => {
+  return {
+    cartInfo: id => dispatch(fetchCartInfo(id))
+  }
+}
+
+export default connect(mapState, mapDispatch)(Cart)

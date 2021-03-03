@@ -13,16 +13,16 @@ const Cart = require('./cart')
  */
 Cart.belongsToMany(Product, {through: 'product-cart-table'})
 
-// Cart.belongsTo(User)
-// User.hasOne(Cart)
+Cart.belongsTo(User)
+User.hasOne(Cart)
 
 // User.hasMany(PurchaseHistory)
 // PurchaseHistory.hasOne(User)
 
 Wishlist.belongsToMany(Product, {through: 'product-wishlist-table'})
 
-// User.hasOne(Wishlist)
-// Wishlist.belongsTo(User)
+User.hasOne(Wishlist)
+Wishlist.belongsTo(User)
 
 Promotion.belongsToMany(Product, {through: 'product-promotion'})
 /**
