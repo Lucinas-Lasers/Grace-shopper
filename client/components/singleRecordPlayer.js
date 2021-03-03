@@ -36,7 +36,7 @@ class SingleRecordPlayer extends React.Component {
     return record.id ? (
       <div className="singleRecord">
         {
-          <div key={record.id} className="singleAlbum">
+          <div key={record.id} className="album">
             <img src={record.image} />
             <h1>{record.name}</h1>
           </div>

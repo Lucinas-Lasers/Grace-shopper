@@ -34,12 +34,19 @@ class SingleRecord extends React.Component {
   render() {
     const record = this.props.singleRecord
     return record.id ? (
-      <div className="singleRecord">
+      <div>
         {
-          <div key={record.id} className="singleAlbum">
+          <div key={record.id} className="albumList">
             <img src={record.image} />
-            <h1>{record.name}</h1>
-            <h1>{record.artist}</h1>
+            <div className="album">
+              <h1>{record.name}</h1>
+              <h1>{record.artist}</h1>
+              <p>{record.description}</p>
+              <p>{record.price}</p>
+              {record.tracks.map((track, ind) => {
+                return <div key={ind}> {track}</div>
+              })}
+            </div>
           </div>
         }
       </div>
