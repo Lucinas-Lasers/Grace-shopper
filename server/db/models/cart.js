@@ -4,10 +4,10 @@ const db = require('../db')
 const Cart = db.define('cart', {
   cartProducts: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    allowNull: true
+    // validate: {
+    //   notEmpty: false,
+    // },
   },
   price: {
     type: Sequelize.DECIMAL
