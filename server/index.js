@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
 module.exports = app
+const seed = require('../script/seed')
 
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
@@ -107,9 +108,11 @@ const startListening = () => {
 
 const syncDb = () => db.sync({force: true})
 
+// added seed file to execute after refreshing DB (ln 115)
 async function bootApp() {
   await sessionStore.sync()
   await syncDb()
+  await seed()
   await createApp()
   await startListening()
 }
