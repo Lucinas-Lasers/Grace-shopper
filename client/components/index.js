@@ -8,4 +8,8 @@ import Cart from './cart'
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
+
 export {Cart}
+
+export {allRecords} from './allRecords'
+
