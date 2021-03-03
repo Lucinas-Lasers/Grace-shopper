@@ -5,6 +5,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
+    console.log(req.body)
     const user = await Cart.findAll({
       where: {
         userId: req.query.userId

@@ -22,19 +22,20 @@ export const getCartInfo = products => ({type: GET_CART_INFO, products})
  * THUNK CREATORS
  */
 
-export const fetchCartInfo = () => async dispatch => {
+export const fetchCartInfo = id => async dispatch => {
   try {
-    const {data} = await axios.get('/api/cart')
+    console.log('id', id)
+    const {data} = await axios.get('/api/cart', id)
     dispatch(getCartInfo(data))
   } catch (err) {
     console.error(err)
   }
 }
 
-export default function(state = initialState, action) {
+export default function cart(state = initialState, action) {
   switch (action.type) {
     case GET_CART_INFO:
-      return action.products.cartProducts
+      return action.products
     default:
       return state
   }
