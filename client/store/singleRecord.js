@@ -4,28 +4,28 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
-const GET_ALL_RECORDS = 'GET_ALL_RECORDS'
+const GET_SINGLE_RECORD = 'GET_SINGLE_RECORD'
 
 /**
  * INITIAL STATE
  */
 
-const defaultRecords = []
+const defaultRecords = {}
 
 /**
  * ACTION CREATORS
  */
 
-export const getAllRecords = records => ({type: GET_ALL_RECORDS, records})
+export const getSingleRecord = record => ({type: GET_SINGLE_RECORD, record})
 
 /**
  * THUNK CREATORS
  */
 
-export const fetchAllRecords = () => async dispatch => {
+export const fetchSingleRecord = id => async dispatch => {
   try {
-    const {data} = await axios.get('/api/records')
-    dispatch(getAllRecords(data))
+    const {data} = await axios.get(`/api/records/${id}`)
+    dispatch(getSingleRecord(data))
   } catch (err) {
     console.error(err)
   }
@@ -37,8 +37,8 @@ export const fetchAllRecords = () => async dispatch => {
 
 export default function(state = defaultRecords, action) {
   switch (action.type) {
-    case GET_ALL_RECORDS:
-      return action.records
+    case GET_SINGLE_RECORD:
+      return action.record
     default:
       return state
   }
