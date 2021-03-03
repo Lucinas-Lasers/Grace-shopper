@@ -32,14 +32,15 @@ export const fetchAllRecords = () => async dispatch => {
 }
 
 /**
- * REDUCER  --- 3/2 needs to be done for fetch records
+ * REDUCER
  */
 
-//  export default function (state =defaultRecords, action){
-//      switch (action.type){
-//      case XXX :  return state,
-
-//      default: return state
-
-//      }
-//     }
+export default function(state = defaultRecords, action) {
+  console.log(action)
+  switch (action.type) {
+    case GET_ALL_RECORDS:
+      return action.records
+    default:
+      return state
+  }
+}

@@ -1,12 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {fetchAllRecords} from '../store/record'
 
 /*
 1. this page display all product
 2. this page will display data from .api/allRecords
 3. this page will thunk will dispatch the axios call to ./api/allRecords to fetch data
-4. redux store will provide state for all records to 
+4. redux store will provide state for all records to
 
 
 state {
@@ -23,25 +24,31 @@ state {
 
 */
 
-class AllRecords {}
-//   constructor() {
-//     super()
-//   }
-//   ComponentDidMount() {
-//     //disptach thunk to bring data from ./api/allRecords
-//   }
+class AllRecords extends React.Component {
+  componentDidMount() {
+    this.props.fetchAllRecords()
+    //disptach thunk to bring data from ./api/allRecords
+  }
 
-// render {
-//     return (
-//         <div>
+  render() {
+    return this.props.allRecords[0] ? (
+      <div>
+        {this.props.allRecords.map(element => {
+          return <img src={element.image} key={element.id} />
+        })}
+      </div>
+    ) : (
+      <div>Loading...</div>
+    )
+  }
+}
 
-//         </div>
+const mapState = state => ({allRecords: state.recordReducer})
 
-//     )
-// }
+const mapDispatch = dispatch => ({
+  fetchAllRecords: () => {
+    dispatch(fetchAllRecords())
+  }
+})
 
-// const mapState = ({ students, campus, test }, { match }) => {
-//     let person = students.find((student) => student.id == match.params.id);
-//     person = person || [];
-//     return { person, campus, test };
-//   }
+export const allRecords = connect(mapState, mapDispatch)(AllRecords)
