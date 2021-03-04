@@ -422,11 +422,10 @@ const carts = [
   {
     userId: 2,
     cartProducts: [
-      {productId: 1, quantity: 2},
-      {productId: 2, quantity: 3},
-      {productId: 1, quantity: 10}
-    ],
-    price: 25
+      {productId: 1, quantity: 2, productPrice: 1000},
+      {productId: 2, quantity: 3, productPrice: 2050},
+      {productId: 1, quantity: 10, productPrice: 3099}
+    ]
   }
 ]
 
