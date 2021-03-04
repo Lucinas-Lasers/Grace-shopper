@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 // Reducer
 import {fetchSingleRecord} from '../store/singleRecord'
+import {ComponentAddToCart} from './componentAddToCart'
 
 /*
 1. this page display all product
@@ -43,6 +44,7 @@ class SingleRecord extends React.Component {
               <h1>{record.artist}</h1>
               <p>{record.description}</p>
               <p>{record.price}</p>
+              <ComponentAddToCart record={record} />
               {record.tracks.map((track, ind) => {
                 return <div key={ind}> {track}</div>
               })}
