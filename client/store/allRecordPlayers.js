@@ -5,7 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_ALL_RECORDPLAYERS = 'GET_ALL_RECORDPLAYERS'
-
+const DELETE_SINGLE_RECORD_PLAYER = 'DELETE_SINGLE_RECORD_PLAYER'
 /**
  * INITIAL STATE
  */
@@ -21,6 +21,11 @@ export const getAllRecordPlayer = recordplayers => ({
   recordplayers
 })
 
+export const deletedSingleRecordPlayer = recordplayer => ({
+  type: DELETE_SINGLE_RECORD_PLAYER,
+  recordplayer
+})
+
 /**
  * THUNK CREATORS
  */
@@ -29,6 +34,15 @@ export const fetchAllRecordPlayers = () => async dispatch => {
   try {
     const {data} = await axios.get(`/api/products/type/Record Player`)
     dispatch(getAllRecordPlayer(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const deleteSingleRecordPlayer = id => async dispatch => {
+  try {
+    const {data} = await axios.delete(`/api/products/${id}`)
+    history.push(`/recordplayers`)
+    dispatch(deletedSingleRecordPlayer(data))
   } catch (err) {
     console.error(err)
   }
@@ -42,6 +56,8 @@ export default function allRecordPlayerReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_RECORDPLAYERS:
       return action.recordplayers
+    case DELETE_SINGLE_RECORD_PLAYER:
+      return state.filter(element => element.id !== action.recordplayer.id)
     default:
       return state
   }
