@@ -10,7 +10,7 @@ const Product = db.define('product', {
     }
   },
   image: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING, // to text
     allowNull: false,
     defaultValue:
       'https://p0.pikist.com/photos/575/1/blank-vinyl-record-jacket-record-vinyl-album-audio-black-blank-case-cover.jpg'
