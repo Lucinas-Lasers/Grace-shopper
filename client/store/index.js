@@ -10,6 +10,7 @@ import recordReducer from './record'
 import singleRecordReducer from './singleRecord'
 import allRecordPlayerReducer from './allRecordPlayers'
 import singleRecordPlayerReducer from './singleRecordPlayer'
+import allUsersReducer from './allUsers'
 
 const reducer = combineReducers({
   user,
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   recordReducer,
   singleRecordReducer,
   allRecordPlayerReducer,
-  singleRecordPlayerReducer
+  singleRecordPlayerReducer,
+  allUsersReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

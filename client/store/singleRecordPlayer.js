@@ -4,6 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_SINGLE_RECORD_PLAYER = 'GET_SINGLE_RECORD_PLAYER'
+const EDIT_SINGLE_RECORD_PLAYER = 'EDIT_SINGLE_RECORD_PLAYER'
 
 /**
  * INITIAL STATE
@@ -20,6 +21,10 @@ export const getSingleRecordPlayer = recordplayer => ({
   recordplayer
 })
 
+export const editedSingleRecordPlayer = recordplayer => ({
+  type: EDIT_SINGLE_RECORD_PLAYER,
+  recordplayer
+})
 /**
  * THUNK CREATORS
  */
@@ -36,6 +41,20 @@ export const fetchSingleRecordPlayer = (id, history) => async dispatch => {
   }
 }
 
+export const editSingleRecordPlayer = (info, history) => {
+  return async dispatch => {
+    try {
+      console.log('editthunk', info.id)
+      let {data} = await axios.put(`/api/products/${info.id}`, info)
+      dispatch(editedSingleRecordPlayer(data))
+      console.log('post thunk', info.id)
+      history.push(`/recordplayer/${info.id}`)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
 /**
  * REDUCER
  */
@@ -46,6 +65,8 @@ export default function singleRecordPlayerReducer(
 ) {
   switch (action.type) {
     case GET_SINGLE_RECORD_PLAYER:
+      return action.recordplayer
+    case EDIT_SINGLE_RECORD_PLAYER:
       return action.recordplayer
     default:
       return state

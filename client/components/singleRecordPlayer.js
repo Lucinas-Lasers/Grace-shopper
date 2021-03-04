@@ -2,33 +2,74 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 // Reducer
-import {fetchSingleRecordPlayer} from '../store/singleRecordPlayer'
-
-/*
-1. this page display all product
-2. this page will display data from .api/allRecords
-3. this page will thunk will dispatch the axios call to ./api/allRecords to fetch data
-4. redux store will provide state for all records to
-
-
-state {
-    allproducts
-    all records
-    all player
-    selected records
-    selected player
-    carts
-    currentUser
-    allUsers
-
-}
-
-*/
+import {
+  fetchSingleRecordPlayer,
+  editSingleRecordPlayer
+} from '../store/singleRecordPlayer'
+import RecordPlayerForm from './recordPlayerForm'
 
 class SingleRecordPlayer extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      description: '',
+      year: '',
+      edit: false,
+      admin: true,
+      loading: false
+    }
+    this.editButton = this.editButton.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
+
+  editButton() {
+    this.setState(currentValue => ({
+      edit: !currentValue.edit
+    }))
+  }
+
+  async handleSubmit(evt) {
+    evt.preventDefault()
+    const {name, description, year} = this.state
+    await this.props.editSingleRecordPlayer({
+      ...this.props.singleRecordPlayer,
+      name,
+      description,
+      year
+    })
+    this.editButton()
+    await this.props.fetchSingleRecordPlayer(this.props.match.params.id)
+  }
+
   componentDidMount() {
     this.props.fetchSingleRecordPlayer(this.props.match.params.id)
-    //disptach thunk to bring data from ./api/allRecords
+    const {id, name, description, year} = this.props.singleRecordPlayer
+    if (id) {
+      this.setState({
+        name,
+        description,
+        year
+      })
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {id, name, description, year} = this.props.singleRecordPlayer
+    if (prevProps.singleRecordPlayer.id !== id) {
+      this.setState({
+        name,
+        description,
+        year
+      })
+    }
   }
 
   render() {
@@ -40,7 +81,22 @@ class SingleRecordPlayer extends React.Component {
             <img src={record.image} />
             <h1>{record.name}</h1>
           </div>
-        }
+        }{' '}
+        {!this.state.edit && this.state.admin ? (
+          <RecordPlayerForm
+            state={this.state}
+            editButton={this.editButton}
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
+          />
+        ) : (
+          <div>
+            {' '}
+            <button id="cancel" type="button" onClick={this.editButton}>
+              Edit
+            </button>
+          </div>
+        )}
       </div>
     ) : (
       <div>Loading...</div>
@@ -55,6 +111,9 @@ const mapState = state => ({
 const mapDispatch = (dispatch, {history}) => ({
   fetchSingleRecordPlayer: id => {
     dispatch(fetchSingleRecordPlayer(id, history))
+  },
+  editSingleRecordPlayer: id => {
+    dispatch(editSingleRecordPlayer(id, history))
   }
 })
 
