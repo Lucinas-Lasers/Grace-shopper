@@ -1,17 +1,16 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {signupAuth} from '../store'
+import {auth} from '../store/user'
 
 /**
  * COMPONENT
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
+    <div className="authcomp">
+      <form className="accountForm" onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="firstName">
             <small>First Name*</small>
@@ -44,11 +43,15 @@ const AuthForm = props => {
           <input name="password" type="password" />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <button className="submitAccountButton" type="submit">
+            {displayName}
+          </button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
+        <a className="googleAuth" href="/auth/google">
+          {displayName} with Google
+        </a>
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
     </div>
   )
 }
@@ -79,9 +82,7 @@ const mapDispatch = dispatch => {
       const lastName = evt.target.lastName.value
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(
-        signupAuth(email, password, firstName, middleName, lastName, formName)
-      )
+      dispatch(auth(email, password, formName, firstName, middleName, lastName))
     }
   }
 }

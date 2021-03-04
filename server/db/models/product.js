@@ -23,7 +23,7 @@ const Product = db.define('product', {
     }
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.DECIMAL, // updating to integer
     allowNull: false,
     validate: {
       notEmpty: true
@@ -36,6 +36,13 @@ const Product = db.define('product', {
       notEmpty: true
     }
   },
+  // numbersePurahced: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   validate: {
+  //     notEmpty: true
+  //   }
+  // },
   type: {
     type: Sequelize.ENUM('Record', 'Record Player'),
     allowNull: false,
