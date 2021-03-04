@@ -5,12 +5,6 @@ const Cart = db.define('cart', {
   cartProducts: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
     allowNull: true
-    // validate: {
-    //   notEmpty: false,
-    // },
-  },
-  price: {
-    type: Sequelize.DECIMAL
   }
 })
 
