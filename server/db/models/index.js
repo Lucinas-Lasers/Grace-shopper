@@ -21,7 +21,7 @@ Order.belongsTo(User)
 User.hasOne(Order)
 
 User.hasMany(Order)
-Order.hasOne(User)
+//Order.hasOne(User)
 
 Wishlist.belongsToMany(Product, {through: 'product-wishlist-table'})
 

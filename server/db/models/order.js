@@ -5,9 +5,7 @@ const db = require('../db')
 
 const Order = db.define('order', {
   status: {
-    type: Sequelize.ENUM,
-    values: ['open', 'fulfilled'],
-    defaultValue: ['open']
+    type: Sequelize.ENUM('open', 'fulfilled')
   },
   promoCode: {type: Sequelize.TEXT},
   fulfillmentDate: {type: Sequelize.DATE}
