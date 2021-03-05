@@ -1,8 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Cart} = require('../server/db/models')
-const {Product} = require('../server/db/models')
+const {User, Product, Order} = require('../server/db/models')
 const products = [
   {
     name: 'Elephant',
@@ -445,11 +444,11 @@ async function seed() {
     })
   )
 
-  await Promise.all(
-    carts.map(cart => {
-      return Cart.create(cart)
-    })
-  )
+  // await Promise.all(
+  //   Order.map((order) => {
+  //     return Order.create (order)
+  //   })
+  // )
   // const users = await Promise.all([
   //   User.create({email: 'cody@email.com', password: '123'}),
   //   User.create({email: 'murphy@email.com', password: '123'}),
