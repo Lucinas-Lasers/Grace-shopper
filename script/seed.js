@@ -1,8 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Cart} = require('../server/db/models')
-const {Product} = require('../server/db/models')
+const {User, Product, Order, ProductOrder} = require('../server/db/models')
 const products = [
   {
     name: 'Elephant',
@@ -25,7 +24,7 @@ const products = [
       `Girl, You Have No Faith In Medicine`,
       `It's True That We Love One Another`
     ],
-    price: 24.99,
+    price: 24990,
     type: `Record`,
     genre: 'Rock',
     albumTitle: `Elephant`,
@@ -53,7 +52,7 @@ const products = [
       `Something In The WayCello – Kirk Canning`,
       `Cello – Kirk Canning`
     ],
-    price: 34.99,
+    price: 34990,
     type: `Record`,
     genre: 'Rock',
     albumTitle: `Nevermind`,
@@ -82,7 +81,7 @@ const products = [
       `Popular Song`,
       `Better Left Unsaid`
     ],
-    price: 19.99,
+    price: 19990,
     type: `Record`,
     genre: 'Pop',
     albumTitle: `Yours Truly`,
@@ -111,7 +110,7 @@ const products = [
       `obvious`,
       `pov`
     ],
-    price: 19.99,
+    price: 19990,
     type: `Record`,
     genre: 'Pop',
     albumTitle: `Positions`,
@@ -141,7 +140,7 @@ const products = [
       `Estamos Bien`,
       `MÍAFeaturing `
     ],
-    price: 24.98,
+    price: 24980,
     type: `Record`,
     genre: 'Reggaeton',
     albumTitle: `X 100PRE `,
@@ -171,7 +170,7 @@ const products = [
       `Estamos Bien`,
       `MÍAFeaturing `
     ],
-    price: 24.98,
+    price: 24980,
     type: `Record`,
     genre: 'Reggaeton',
     albumTitle: `X 100PRE `,
@@ -201,7 +200,7 @@ const products = [
       `Estamos Bien`,
       `MÍAFeaturing `
     ],
-    price: 24.98,
+    price: 24980,
     type: `Record`,
     genre: 'Reggaeton',
     albumTitle: `X 100PRE `,
@@ -231,7 +230,7 @@ const products = [
       `Estamos Bien`,
       `MÍAFeaturing `
     ],
-    price: 24.98,
+    price: 24980,
     type: `Record`,
     genre: 'Reggaeton',
     albumTitle: `X 100PRE `,
@@ -261,7 +260,7 @@ const products = [
       `Estamos Bien`,
       `MÍAFeaturing `
     ],
-    price: 24.98,
+    price: 24980,
     type: `Record`,
     genre: 'Reggaeton',
     albumTitle: `X 100PRE `,
@@ -291,7 +290,7 @@ const products = [
       `Estamos Bien`,
       `MÍAFeaturing `
     ],
-    price: 24.98,
+    price: 24980,
     type: `Record`,
     genre: 'Reggaeton',
     albumTitle: `X 100PRE `,
@@ -321,7 +320,7 @@ const products = [
       `Estamos Bien`,
       `MÍAFeaturing `
     ],
-    price: 24.98,
+    price: 24980,
     type: `Record`,
     genre: 'Reggaeton',
     albumTitle: `X 100PRE `,
@@ -333,8 +332,8 @@ const products = [
     name: 'Victrola Vintage 3-Speed Bluetooth Portable',
     description: `The Victrola portable suitcase turntable is an absolute classic and loaded with features. Includes built-in Bluetooth technology to wirelessly stream music from any Bluetooth enabled device, 3-speed turntable (33 1/3, 45, 78 RPM), built-in speakers, 3.5mm aux-in jack for playing music from any non-Bluetooth device, RCA jack and headphone jack. Portable design and carry handle allows for tunes wherever you may go.
 `,
-    price: 54.98,
-    type: `Record Player`,
+    price: 54980,
+    type: `Record_Player`,
     year: 2020,
     quantity: 10,
     image: `https://m.media-amazon.com/images/S/aplus-media/vc/777d4c9d-8a56-4c1c-b0c6-e91b40035aaa._SR285,285_.jpg`
@@ -343,8 +342,8 @@ const products = [
     name: ' Victrola Nostalgic Classic Wood 6-in-1 Bluetooth',
     description: `With vintage looks on the outside & modern features inside, listen your way; vinyl records, CDs, cassettes, AM/FM radio or stream music from your smartphone via Bluetooth or 3.5 mm Aux/headphone jack
 `,
-    price: 84.98,
-    type: `Record Player`,
+    price: 84980,
+    type: `Record_Player`,
     year: 2017,
     quantity: 1,
     image: `https://images-na.ssl-images-amazon.com/images/I/71dx2uYlj2L._AC_SL1200_.jpg`
@@ -353,8 +352,8 @@ const products = [
     name: ' Victrola Nostalgic Classic Wood 6-in-1 Bluetooth',
     description: `With vintage looks on the outside & modern features inside, listen your way; vinyl records, CDs, cassettes, AM/FM radio or stream music from your smartphone via Bluetooth or 3.5 mm Aux/headphone jack
 `,
-    price: 84.98,
-    type: `Record Player`,
+    price: 84980,
+    type: `Record_Player`,
     year: 2017,
     quantity: 1,
     image: `https://images-na.ssl-images-amazon.com/images/I/71dx2uYlj2L._AC_SL1200_.jpg`
@@ -364,8 +363,8 @@ const products = [
     description: `Exquisite Appearance, Built from wood and metal materials with a unique sense of layering, The streamlined corner design is truly atmospheric and stylish
 
 `,
-    price: 199.99,
-    type: `Record Player`,
+    price: 199990,
+    type: `Record_Player`,
     year: 2020,
     quantity: 30,
     image: `https://images-na.ssl-images-amazon.com/images/I/71M3kcYuW2L._AC_SL1500_.jpg`
@@ -375,8 +374,8 @@ const products = [
     description: `Hsada wdfjkeskd add wekjdwdjkwe dhwekdjw edfhewd wjdwekdwe dwdew dwed ewd wewedw dwefdwedwjw edwj fjkwef kwejdwd wdkwejwekfwejkf wefjw fjewfew fwejf ewjfwefj we.
 
 `,
-    price: 99.99,
-    type: `Record Player`,
+    price: 99990,
+    type: `Record_Player`,
     year: 2020,
     quantity: 30,
     image: `https://images-na.ssl-images-amazon.com/images/I/71M3kcYuW2L._AC_SL1500_.jpg`
@@ -418,19 +417,31 @@ const users = [
   }
 ]
 
-const carts = [
-  {
-    userId: 2,
-    cartProducts: [
-      {productId: 1, quantity: 2, productPrice: 1000},
-      {productId: 2, quantity: 3, productPrice: 2050},
-      {productId: 1, quantity: 10, productPrice: 3099}
-    ]
-  }
-]
+// const orders = [
+//   {
+//     status: 'open',
+//     userId: 1,
+//   },
+
+//   {
+//     status: 'open',
+//     userId: 4,
+//   },
+// ]
+
+// const carts = [
+//   {orderId: 1, productId: 2, qty: 2, price: 1000},
+
+//   {
+//     orderId: 2,
+//     productId: 1,
+//     qty: 3,
+//     price: 2050,
+//   },
+// ]
 
 async function seed() {
-  await db.sync({force: true})
+  await db.sync({force: false})
   console.log('db synced!')
 
   await Promise.all(
@@ -445,11 +456,18 @@ async function seed() {
     })
   )
 
-  await Promise.all(
-    carts.map(cart => {
-      return Cart.create(cart)
-    })
-  )
+  // await Promise.all(
+  //   orders.map((order) => {
+  //     return Order.create(order)
+  //   })
+  // )
+
+  // await Promise.all(
+  //   carts.map((cart) => {
+  //     return ProductOrder.create(cart)
+  //   })
+  // )
+
   // const users = await Promise.all([
   //   User.create({email: 'cody@email.com', password: '123'}),
   //   User.create({email: 'murphy@email.com', password: '123'}),
