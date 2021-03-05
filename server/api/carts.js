@@ -20,10 +20,10 @@ router.get('/', async (req, res, next) => {
 
 //show all the cart information by the specific cartID
 
-router.get('/:cartId', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
     const cart = await Cart.findAll({
-      where: {id: req.params.cartId},
+      where: {userId: req.params.userId},
       include: {model: User}
     })
     res.json(cart)

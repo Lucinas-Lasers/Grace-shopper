@@ -25,7 +25,7 @@ export const getCartInfo = products => ({type: GET_CART_INFO, products})
 export const fetchCartInfo = id => async dispatch => {
   try {
     console.log('id', id)
-    const {data} = await axios.get('/api/cart', id)
+    const {data} = await axios.get(`/api/cart/${id}`)
     dispatch(getCartInfo(data))
   } catch (err) {
     console.error(err)
