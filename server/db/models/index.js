@@ -2,8 +2,8 @@ const User = require('./user')
 const Product = require('./product')
 const Promotion = require('./promotion')
 const Wishlist = require('./wishlist')
-const PurchaseHistory = require('./purchaseHistory')
-const Cart = require('./cart')
+const Order = require('./order')
+const ProductOrder = require('./product-order')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -11,13 +11,17 @@ const Cart = require('./cart')
  *
  *    BlogPost.belongsTo(User)
  */
-Cart.belongsToMany(Product, {through: 'product-cart-table'})
 
-Cart.belongsTo(User)
-User.hasOne(Cart)
+//030521 YF included Order and ProductOrder
+//030521 YF updated association between Order and Product Order
 
-// User.hasMany(PurchaseHistory)
-// PurchaseHistory.hasOne(User)
+Order.belongsToMany(Product, {through: 'product-order'})
+
+Order.belongsTo(User)
+User.hasOne(Order)
+
+User.hasMany(Order)
+Order.hasOne(User)
 
 Wishlist.belongsToMany(Product, {through: 'product-wishlist-table'})
 
@@ -25,6 +29,7 @@ User.hasOne(Wishlist)
 Wishlist.belongsTo(User)
 
 Promotion.belongsToMany(Product, {through: 'product-promotion'})
+Promotion.belongsToMany(Order, {through: 'order-promotion'})
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -34,8 +39,8 @@ Promotion.belongsToMany(Product, {through: 'product-promotion'})
 module.exports = {
   User,
   Product,
-  Cart,
-  PurchaseHistory,
+  Order,
+  ProductOrder,
   Wishlist,
   Promotion
 }
