@@ -2,6 +2,8 @@ const router = require('express').Router()
 const Product = require('../db/models/product')
 module.exports = router
 
+//030521 - Currently Not using this routes. DO NOT TOUCH
+
 router.get('/', async (req, res, next) => {
   try {
     //so axios call to backend will include a parameter for type

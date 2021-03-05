@@ -2,6 +2,8 @@ const router = require('express').Router()
 const {User} = require('../db/models')
 module.exports = router
 
+// API/admin
+
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll(
