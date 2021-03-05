@@ -18,10 +18,7 @@ const ProductOrder = require('./product-order')
 Order.belongsToMany(Product, {through: 'product-order'})
 
 Order.belongsTo(User)
-User.hasOne(Order)
-
 User.hasMany(Order)
-//Order.hasOne(User)
 
 Wishlist.belongsToMany(Product, {through: 'product-wishlist-table'})
 
