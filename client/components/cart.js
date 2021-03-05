@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCartInfo} from '../store/cart'
+
 const dummy = [
   {
     name: 'album1',
@@ -38,8 +39,7 @@ class Cart extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   async componentDidMount() {
-    let result = await this.props.cartInfo({userId: 2})
-    console.log('resu;t', result)
+    await this.props.cartInfo(this.props.states.id)
   }
 
   handleChange(e, indx) {
@@ -55,11 +55,9 @@ class Cart extends React.Component {
   }
 
   render() {
-    // console.log('this.props in render', this.props)
-    // console.log('this.props.cart in render', this.props.cartProducts)
-
-    // const overallPrice =
-    // console.log(overallPrice)
+    // const cart = this.props.cartProducts
+    console.log('this.props', this.props)
+    console.log('products', this.props.cartProducts)
     return (
       <div className="cartList">
         {this.state.historyArray.map((item, indx) => {
@@ -98,7 +96,8 @@ class Cart extends React.Component {
 }
 
 const mapState = state => ({
-  cartProducts: state.products
+  cartProducts: state.cart[0],
+  states: state.user
 })
 
 const mapDispatch = dispatch => {
