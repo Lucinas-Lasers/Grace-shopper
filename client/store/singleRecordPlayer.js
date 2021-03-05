@@ -10,7 +10,7 @@ const EDIT_SINGLE_RECORD_PLAYER = 'EDIT_SINGLE_RECORD_PLAYER'
  * INITIAL STATE
  */
 
-const initialState = {}
+const initialState = {loading: true}
 
 /**
  * ACTION CREATORS
@@ -65,9 +65,17 @@ export default function singleRecordPlayerReducer(
 ) {
   switch (action.type) {
     case GET_SINGLE_RECORD_PLAYER:
-      return action.recordplayer
+      return {
+        ...initialState,
+        loading: false,
+        recordplayer: action.recordplayer
+      }
     case EDIT_SINGLE_RECORD_PLAYER:
-      return action.recordplayer
+      return {
+        ...initialState,
+        loading: false,
+        recordplayer: action.recordplayer
+      }
     default:
       return state
   }
