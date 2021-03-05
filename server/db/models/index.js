@@ -1,7 +1,7 @@
 const User = require('./user')
 const Product = require('./product')
 const Promotion = require('./promotion')
-const Wishlist = require('./wishlist')
+// const Wishlist = require('./wishlist')
 const PurchaseHistory = require('./purchaseHistory')
 const Cart = require('./cart')
 
@@ -19,10 +19,10 @@ User.hasOne(Cart)
 // User.hasMany(PurchaseHistory)
 // PurchaseHistory.hasOne(User)
 
-Wishlist.belongsToMany(Product, {through: 'product-wishlist-table'})
+// Wishlist.belongsToMany(Product, {through: 'product-wishlist-table'})
 
-User.hasOne(Wishlist)
-Wishlist.belongsTo(User)
+// User.hasOne(Wishlist)
+// Wishlist.belongsTo(User)
 
 Promotion.belongsToMany(Product, {through: 'product-promotion'})
 /**
@@ -36,6 +36,6 @@ module.exports = {
   Product,
   Cart,
   PurchaseHistory,
-  Wishlist,
+  // Wishlist,
   Promotion
 }
