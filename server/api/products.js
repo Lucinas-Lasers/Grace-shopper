@@ -2,6 +2,8 @@ const router = require('express').Router()
 const Product = require('../db/models/product')
 module.exports = router
 
+//API/products
+
 router.get('/type/:type', async (req, res, next) => {
   try {
     const recordPlayer = await Product.findAll({

@@ -15,8 +15,14 @@ const ProductOrder = require('./product-order')
 //030521 YF included Order and ProductOrder
 //030521 YF updated association between Order and Product Order
 
-Order.belongsToMany(Product, {through: 'product-order'})
-Product.belongsToMany(Order, {through: 'product-order'})
+Order.belongsToMany(Product, {
+  through: 'product-order',
+  foreignKey: 'productId'
+})
+Product.belongsToMany(Order, {
+  through: 'product-order',
+  foreignKey: 'orderId'
+})
 
 Order.belongsTo(User)
 User.hasMany(Order)
@@ -28,6 +34,7 @@ Wishlist.belongsTo(User)
 
 Promotion.belongsToMany(Product, {through: 'product-promotion'})
 Promotion.belongsToMany(Order, {through: 'order-promotion'})
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
