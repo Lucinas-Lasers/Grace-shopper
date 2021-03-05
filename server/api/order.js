@@ -10,7 +10,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const orders = await ProductOrder.findAll({
-      include: {model: Product}
+      //include: {model: Product},
     })
     res.json(orders)
   } catch (err) {
@@ -23,8 +23,8 @@ router.get('/', async (req, res, next) => {
 router.get('/:orderId', async (req, res, next) => {
   try {
     const order = await ProductOrder.findAll({
-      where: {id: req.params.orderId},
-      include: {model: Product}
+      where: {orderId: req.params.orderId}
+      //include: {model: Product},
     })
     res.json(order)
   } catch (err) {
