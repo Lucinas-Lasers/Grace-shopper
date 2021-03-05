@@ -417,24 +417,31 @@ const users = [
   }
 ]
 
-const orders = [
-  {
-    userId: 2,
-    productId: 1,
-    qty: 2,
-    price: 1000
-  },
+// const orders = [
+//   {
+//     status: 'open',
+//     userId: 1,
+//   },
 
-  {
-    userId: 1,
-    productId: 2,
-    qty: 3,
-    price: 2050
-  }
-]
+//   {
+//     status: 'open',
+//     userId: 4,
+//   },
+// ]
+
+// const carts = [
+//   {orderId: 1, productId: 2, qty: 2, price: 1000},
+
+//   {
+//     orderId: 2,
+//     productId: 1,
+//     qty: 3,
+//     price: 2050,
+//   },
+// ]
 
 async function seed() {
-  await db.sync({force: true})
+  await db.sync({force: false})
   console.log('db synced!')
 
   await Promise.all(
@@ -451,9 +458,16 @@ async function seed() {
 
   // await Promise.all(
   //   orders.map((order) => {
-  //     return ProductOrder.create(order)
+  //     return Order.create(order)
   //   })
   // )
+
+  // await Promise.all(
+  //   carts.map((cart) => {
+  //     return ProductOrder.create(cart)
+  //   })
+  // )
+
   // const users = await Promise.all([
   //   User.create({email: 'cody@email.com', password: '123'}),
   //   User.create({email: 'murphy@email.com', password: '123'}),

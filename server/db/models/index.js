@@ -16,6 +16,7 @@ const ProductOrder = require('./product-order')
 //030521 YF updated association between Order and Product Order
 
 Order.belongsToMany(Product, {through: 'product-order'})
+Product.belongsToMany(Order, {through: 'product-order'})
 
 Order.belongsTo(User)
 User.hasMany(Order)
