@@ -1,7 +1,7 @@
 const User = require('./user')
 const Product = require('./product')
 const Promotion = require('./promotion')
-const Wishlist = require('./Wishlist')
+const Wishlist = require('./wishlist')
 const PurchaseHistory = require('./purchaseHistory')
 const Cart = require('./cart')
 

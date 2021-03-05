@@ -1,5 +1,5 @@
 {
-  "name": "boilermaker",
+  "name": "laser-records",
   "version": "2.0.0",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
@@ -10,7 +10,7 @@
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "deploy": "bash script/deploy",
-    "heroku-token": "script/encrypt-heroku-auth-token.js",
+    "heroku-token": "bash script/encrypt-heroku-auth-token.js",
     "lint": "eslint ./ --ignore-path .gitignore",
     "lint-fix": "npm run lint -- --fix",
     "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
