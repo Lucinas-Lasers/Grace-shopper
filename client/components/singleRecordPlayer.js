@@ -16,8 +16,7 @@ class SingleRecordPlayer extends React.Component {
       description: '',
       year: '',
       edit: false,
-      admin: true,
-      loading: false
+      admin: true
     }
     this.editButton = this.editButton.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -40,7 +39,7 @@ class SingleRecordPlayer extends React.Component {
     evt.preventDefault()
     const {name, description, year} = this.state
     await this.props.editSingleRecordPlayer({
-      ...this.props.singleRecordPlayer,
+      ...this.props.singleRecordPlayer.recordplayer,
       name,
       description,
       year
@@ -51,8 +50,15 @@ class SingleRecordPlayer extends React.Component {
 
   componentDidMount() {
     this.props.fetchSingleRecordPlayer(this.props.match.params.id)
-    const {id, name, description, year} = this.props.singleRecordPlayer
-    if (id) {
+    console.log('cdm', this.props.singleRecordPlayer.recordplayer)
+
+    if (this.props.singleRecordPlayer.recordplayer) {
+      const {
+        id,
+        name,
+        description,
+        year
+      } = this.props.singleRecordPlayer.recordplayer
       this.setState({
         name,
         description,
@@ -62,8 +68,17 @@ class SingleRecordPlayer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {id, name, description, year} = this.props.singleRecordPlayer
-    if (prevProps.singleRecordPlayer.id !== id) {
+    console.log('CDU', prevProps)
+    if (
+      !prevProps.singleRecordPlayer.recordplayer &&
+      this.props.singleRecordPlayer.recordplayer
+    ) {
+      const {
+        id,
+        name,
+        description,
+        year
+      } = this.props.singleRecordPlayer.recordplayer
       this.setState({
         name,
         description,
@@ -73,8 +88,9 @@ class SingleRecordPlayer extends React.Component {
   }
 
   render() {
-    const record = this.props.singleRecordPlayer
-    return record.id ? (
+    console.log('render', this.props)
+    const record = this.props.singleRecordPlayer.recordplayer
+    return !this.props.singleRecordPlayer.loading ? (
       <div className="singleRecord">
         {
           <div key={record.id} className="album">
@@ -82,20 +98,24 @@ class SingleRecordPlayer extends React.Component {
             <h1>{record.name}</h1>
           </div>
         }{' '}
-        {!this.state.edit && this.state.admin ? (
-          <RecordPlayerForm
-            state={this.state}
-            editButton={this.editButton}
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
-          />
+        {this.props.user.admin ? (
+          !this.state.edit ? (
+            <RecordPlayerForm
+              state={this.state}
+              editButton={this.editButton}
+              handleSubmit={this.handleSubmit}
+              handleChange={this.handleChange}
+            />
+          ) : (
+            <div>
+              {' '}
+              <button id="cancel" type="button" onClick={this.editButton}>
+                Edit
+              </button>
+            </div>
+          )
         ) : (
-          <div>
-            {' '}
-            <button id="cancel" type="button" onClick={this.editButton}>
-              Edit
-            </button>
-          </div>
+          <div>Not an Admin</div>
         )}
       </div>
     ) : (
@@ -105,7 +125,8 @@ class SingleRecordPlayer extends React.Component {
 }
 
 const mapState = state => ({
-  singleRecordPlayer: state.singleRecordPlayerReducer
+  singleRecordPlayer: state.singleRecordPlayerReducer,
+  user: state.user
 })
 
 const mapDispatch = (dispatch, {history}) => ({
