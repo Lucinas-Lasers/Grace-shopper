@@ -1,8 +1,7 @@
 const User = require('./user')
 const Product = require('./product')
 const Promotion = require('./promotion')
-
-// const Wishlist = require('./wishlist')
+const Wishlist = require('./wishlist')
 const Order = require('./order')
 const ProductOrder = require('./product-order')
 
@@ -17,17 +16,16 @@ const ProductOrder = require('./product-order')
 //030521 YF updated association between Order and Product Order
 
 Order.belongsToMany(Product, {
-  through: 'product-order',
-  foreignKey: 'productId'
+  through: ProductOrder
 })
 Product.belongsToMany(Order, {
-  through: 'product-order',
-  foreignKey: 'orderId'
+  through: ProductOrder
 })
 
 Order.belongsTo(User)
 User.hasMany(Order)
 
+// 3/5/21 YF Disabled for this time-being
 // Wishlist.belongsToMany(Product, {through: 'product-wishlist-table'})
 
 // User.hasOne(Wishlist)
@@ -45,10 +43,8 @@ Promotion.belongsToMany(Order, {through: 'order-promotion'})
 module.exports = {
   User,
   Product,
-
+  Wishlist,
   Order,
   ProductOrder,
-  //Wishlist,
-
   Promotion
 }

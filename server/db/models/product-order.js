@@ -1,7 +1,9 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-//030521 YF created
+//This is essentially the cart info
+//Associated with Order
+//Associated with Product
 
 const ProductOrder = db.define('product-order', {
   qty: {type: Sequelize.INTEGER},

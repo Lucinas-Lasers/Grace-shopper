@@ -22,11 +22,10 @@ form div {
 
 /* navbar */
 
-.cheeseLogo {
+/* .cheeseLogo {
   width: 5em;
   height: 5em;
   position: absolute;
-  left: 0;
 }
 
 .navbar {
@@ -38,14 +37,11 @@ form div {
   width: auto;
 }
 
-.navbarProducts {
-}
-
 .accountManagement {
   position: absolute;
   top: 0;
   right: 0;
-  /* flex */
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,13 +53,158 @@ form div {
   align-items: center;
 }
 
-.navbar > a {
-}
-
 .productsItems {
   visibility: hidden;
   z-index: 3;
+} */
+
+/* Navbar - Diego changes */
+
+.navbar {
+  display: flex;
+  width: auto;
+  height: 55px;
+  margin-bottom: 10px;
+  background: dimgray;
+  justify-content: space-between;
 }
+
+.navbar .navbarContainerLeft {
+  display: flex;
+  width: 400px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 190px;
+}
+
+.logoContainer h3 {
+  color: white;
+}
+
+.logoContainer .logo {
+  width: 40px;
+  height: 40px;
+}
+
+.navbarProducts {
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+  width: 100px;
+  max-height: 140px;
+  align-self: baseline;
+  z-index: 1;
+  transition: background 0.5s;
+}
+
+.productButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+}
+
+.productButton p {
+  color: white;
+}
+
+.navbarProducts:hover {
+  background: rgb(165, 165, 165);
+  transition: background 0.5s;
+  cursor: pointer;
+}
+
+.navbarProducts:hover .productItems {
+  display: flex;
+}
+
+.productItems {
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background: dimgrey;
+  padding: 0px 5px;
+  width: 120px;
+  height: 80px;
+  color: black;
+}
+
+.productOption {
+  background: grey;
+  color: white;
+  width: auto;
+  height: auto;
+  padding: 5px 5px;
+  transition: background 0.5s;
+}
+
+.productOption:hover {
+  background: rgb(165, 165, 165);
+  transition: background 0.5s;
+}
+
+.navbarContainerRight {
+  display: flex;
+  width: 280px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.navbarLogin {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  height: auto;
+  max-width: 225px;
+}
+
+/* -----
+SVG Icons - svgicons.sparkk.fr
+----- */
+/* Cart icon */
+
+.svg-icon {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: white;
+}
+
+.svg-icon circle {
+  stroke: white;
+  stroke-width: 1;
+}
+
+/* ---------- */
+
+.navbarButton {
+  display: flex;
+  background: grey;
+  color: white;
+  width: 57px;
+  height: 55px;
+  padding: 0px 8px;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.5s;
+}
+
+.navbarButton:hover {
+  background: rgb(165, 165, 165);
+  transition: background 0.5s;
+}
+
+/* Product Cards */
 
 .cartItem {
   width: 100%;
@@ -71,24 +212,42 @@ form div {
   background-color: rgb(173, 173, 173);
 }
 
-.albumList {
+/* Product card */
+
+.productList {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
-.album {
+.productCard {
+  background-color: #7a7a7a;
+  width: 170px;
+  height: 250px;
+  color: white;
+  box-shadow: 0px 0px 3px 1px black;
+  transition: background 0.5s;
+}
+
+.productCard:hover {
+  background: #9c9c9c;
+  transition: background 0.5s;
+}
+
+.productCardItems {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
-  background-color: grey;
-  margin: 5px;
 }
 
-.album > img {
-  width: 200px;
-  height: 200px;
+.productCardItems * {
+  margin: 8px 0px;
+}
+
+.productCardItems > img {
+  height: 145px;
+  width: 149px;
+  box-shadow: 0px 0px 0px 1px white;
 }
 
 /* Login / signup */

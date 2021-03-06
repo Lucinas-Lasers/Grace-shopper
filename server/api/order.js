@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product, Order, ProductOrder, User} = require('../db/models')
+const {Product, Order, User} = require('../db/models')
 
 module.exports = router
 
@@ -9,8 +9,17 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await ProductOrder.findAll({
-      //include: {model: Product},
+    const orders = await Order.findAll({
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'albumTitle', 'artist', 'type']
+        },
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName', 'email']
+        }
+      ]
     })
     res.json(orders)
   } catch (err) {
@@ -22,10 +31,49 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:orderId', async (req, res, next) => {
   try {
-    const order = await ProductOrder.findAll({
-      where: {orderId: req.params.orderId}
-      //include: {model: Product},
+    const order = await Order.findAll({
+      where: {id: req.params.orderId},
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'albumTitle', 'artist', 'type']
+        },
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName', 'email']
+        }
+      ]
     })
+
+    res.json(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//show order by userId - right now, this does not filter only for open cart
+
+router.get('/user/:userId', async (req, res, next) => {
+  try {
+    const userOrder = await User.findAll({
+      where: {id: req.params.userId},
+      include: [{model: Order}]
+    })
+
+    const order = await Order.findAll({
+      where: {id: userOrder[0].orders[0].id},
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'albumTitle', 'artist', 'type']
+        },
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName', 'email']
+        }
+      ]
+    })
+
     res.json(order)
   } catch (err) {
     next(err)
@@ -36,10 +84,20 @@ router.get('/:orderId', async (req, res, next) => {
 
 router.put('/:orderId', async (req, res, next) => {
   try {
-    const cart = await ProductOrder.findAll({
-      where: {orderId: req.params.orderId}
+    const order = await await Order.findAll({
+      where: {id: req.params.orderId},
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'albumTitle', 'artist', 'type']
+        },
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName', 'email']
+        }
+      ]
     })
-    await cart.update(req.body)
+    await order.update(req.body)
   } catch (err) {
     next(err)
   }
