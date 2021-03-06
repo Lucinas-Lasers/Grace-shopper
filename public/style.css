@@ -98,6 +98,7 @@ form div {
   width: 100px;
   max-height: 140px;
   align-self: baseline;
+  z-index: 1;
   transition: background 0.5s;
 }
 
