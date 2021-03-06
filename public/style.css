@@ -22,11 +22,10 @@ form div {
 
 /* navbar */
 
-.cheeseLogo {
+/* .cheeseLogo {
   width: 5em;
   height: 5em;
   position: absolute;
-  left: 0;
 }
 
 .navbar {
@@ -38,14 +37,11 @@ form div {
   width: auto;
 }
 
-.navbarProducts {
-}
-
 .accountManagement {
   position: absolute;
   top: 0;
   right: 0;
-  /* flex */
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,13 +53,129 @@ form div {
   align-items: center;
 }
 
-.navbar > a {
-}
-
 .productsItems {
   visibility: hidden;
   z-index: 3;
+} */
+
+/* Navbar - Diego changes */
+
+.navbar {
+  display: flex;
+  width: auto;
+  height: 55px;
+  background: dimgray;
+  justify-content: space-between;
 }
+
+.navbar .navbarContainerLeft {
+  display: flex;
+  width: 400px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 190px;
+}
+
+.logoContainer h3 {
+  color: white;
+}
+
+.logoContainer .logo {
+  width: 40px;
+  height: 40px;
+}
+
+.navbarProducts {
+  background-color: grey;
+  width: 100px;
+  height: 55px;
+}
+
+.navbarProducts p {
+  color: white;
+  position: relative;
+  top: 3.5px;
+  left: 19px;
+  transition: background 0.5s;
+}
+
+.navbarProducts:hover {
+  background: rgb(165, 165, 165);
+  transition: background 0.5s;
+  cursor: pointer;
+}
+
+.navbarProducts:hover .productItems {
+  display: flex;
+}
+
+.productItems {
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background: dimgrey;
+  padding: 0px 5px;
+  width: 120px;
+  height: 80px;
+  top: 17px;
+  left: -10px;
+  position: relative;
+  color: black;
+}
+
+.productOption {
+  background: grey;
+  color: white;
+  width: auto;
+  height: auto;
+  padding: 5px 5px;
+  transition: background 0.5s;
+}
+
+.productOption:hover {
+  background: rgb(165, 165, 165);
+  transition: background 0.5s;
+}
+
+.navbarContainerRight {
+  display: flex;
+  width: 280px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.navbarLogin {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  height: auto;
+  max-width: 225px;
+}
+
+.navbarButton {
+  display: flex;
+  background: grey;
+  color: white;
+  width: 57px;
+  height: 55px;
+  padding: 0px 8px;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.5s;
+}
+
+.navbarButton:hover {
+  background: rgb(165, 165, 165);
+  transition: background 0.5s;
+}
+
+/* Product Cards */
 
 .cartItem {
   width: 100%;
