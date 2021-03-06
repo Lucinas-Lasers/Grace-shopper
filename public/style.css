@@ -92,17 +92,23 @@ form div {
 }
 
 .navbarProducts {
+  display: flex;
+  flex-direction: column;
   background-color: grey;
   width: 100px;
+  max-height: 140px;
+  align-self: baseline;
+}
+
+.productButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 55px;
 }
 
-.navbarProducts p {
+.productButton p {
   color: white;
-  position: relative;
-  top: 3.5px;
-  left: 19px;
-  transition: background 0.5s;
 }
 
 .navbarProducts:hover {
@@ -123,9 +129,6 @@ form div {
   padding: 0px 5px;
   width: 120px;
   height: 80px;
-  top: 17px;
-  left: -10px;
-  position: relative;
   color: black;
 }
 

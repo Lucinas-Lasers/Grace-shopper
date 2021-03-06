@@ -15,17 +15,17 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         </div>
       </Link>
       <div className="navbarProducts">
-        <p>
-          Products
-          <div className="productItems">
-            <Link to="/allRecords">
-              <div className="productOption">Albums</div>
-            </Link>
-            <Link to="/recordplayers">
-              <div className="productOption">Record Players</div>
-            </Link>
-          </div>
-        </p>
+        <div className="productButton">
+          <p>Products</p>
+        </div>
+        <div className="productItems">
+          <Link to="/allRecords">
+            <div className="productOption">Albums</div>
+          </Link>
+          <Link to="/recordplayers">
+            <div className="productOption">Record Players</div>
+          </Link>
+        </div>
       </div>
     </div>
 
