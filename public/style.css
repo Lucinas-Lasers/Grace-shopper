@@ -64,6 +64,7 @@ form div {
   display: flex;
   width: auto;
   height: 55px;
+  margin-bottom: 10px;
   background: dimgray;
   justify-content: space-between;
 }
