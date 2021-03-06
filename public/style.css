@@ -163,6 +163,29 @@ form div {
   max-width: 225px;
 }
 
+/* -----
+SVG Icons - svgicons.sparkk.fr
+----- */
+/* Cart icon */
+
+.svg-icon {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: white;
+}
+
+.svg-icon circle {
+  stroke: white;
+  stroke-width: 1;
+}
+
+/* ---------- */
+
 .navbarButton {
   display: flex;
   background: grey;
