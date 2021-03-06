@@ -103,4 +103,4 @@ router.put('/:orderId', async (req, res, next) => {
   }
 })
 
-//No cart delete cart API call - user always have one cart.
+//No "delete order" API call - user always have one cart.
