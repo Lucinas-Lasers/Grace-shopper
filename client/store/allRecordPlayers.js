@@ -10,7 +10,7 @@ const DELETE_SINGLE_RECORD_PLAYER = 'DELETE_SINGLE_RECORD_PLAYER'
  * INITIAL STATE
  */
 
-const initialState = []
+const initialState = {loading: true}
 
 /**
  * ACTION CREATORS
@@ -32,7 +32,7 @@ export const deletedSingleRecordPlayer = recordplayer => ({
 
 export const fetchAllRecordPlayers = () => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/products/type/Record Player`)
+    const {data} = await axios.get(`/api/products/type/Record_Player`)
     dispatch(getAllRecordPlayer(data))
   } catch (err) {
     console.error(err)
@@ -55,7 +55,7 @@ export const deleteSingleRecordPlayer = id => async dispatch => {
 export default function allRecordPlayerReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_RECORDPLAYERS:
-      return action.recordplayers
+      return {...state, loading: false, recordplayers: action.recordplayers}
     case DELETE_SINGLE_RECORD_PLAYER:
       return state.filter(element => element.id !== action.recordplayer.id)
     default:

@@ -15,8 +15,7 @@ class SingleRecordPlayer extends React.Component {
       name: '',
       description: '',
       year: '',
-      edit: false,
-      admin: true
+      edit: false
     }
     this.editButton = this.editButton.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -54,7 +53,6 @@ class SingleRecordPlayer extends React.Component {
 
     if (this.props.singleRecordPlayer.recordplayer) {
       const {
-        id,
         name,
         description,
         year
@@ -74,7 +72,6 @@ class SingleRecordPlayer extends React.Component {
       this.props.singleRecordPlayer.recordplayer
     ) {
       const {
-        id,
         name,
         description,
         year

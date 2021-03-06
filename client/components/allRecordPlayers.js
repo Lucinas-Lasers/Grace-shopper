@@ -14,17 +14,25 @@ class AllRecordPlayers extends React.Component {
   }
 
   render() {
-    return this.props.allRecordPlayers[0] ? (
+    return !this.props.allRecordPlayers.loading ? (
       <div className="albumList">
-        {this.props.allRecordPlayers.map(element => {
+        {this.props.allRecordPlayers.recordplayers.map(element => {
           return (
             <div key={element.id} className="album">
-              <img src={element.image} />
-              <h1>{element.name}</h1>
-              <EditProduct
-                deleteItem={this.props.deleteSingleRecordPlayer}
-                product={element.id}
-              />
+              <Link to={`/recordplayer/${element.id}`}>
+                <div>
+                  <img src={element.image} />
+                  <h1>{element.name}</h1>
+                </div>
+              </Link>
+              {this.props.user && this.props.user.admin ? (
+                <EditProduct
+                  deleteItem={this.props.deleteSingleRecordPlayer}
+                  product={element.id}
+                />
+              ) : (
+                <div />
+              )}
             </div>
           )
         })}
@@ -35,7 +43,10 @@ class AllRecordPlayers extends React.Component {
   }
 }
 
-const mapState = state => ({allRecordPlayers: state.allRecordPlayerReducer})
+const mapState = state => ({
+  allRecordPlayers: state.allRecordPlayerReducer,
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
   fetchAllRecordPlayers: () => {
