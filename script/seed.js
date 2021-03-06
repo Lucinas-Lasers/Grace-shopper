@@ -435,7 +435,10 @@ const orders = [
     status: 'fulfilled',
     userId: 3
   },
-
+  {
+    status: 'open',
+    userId: 3
+  },
   {
     status: 'open',
     userId: 4
