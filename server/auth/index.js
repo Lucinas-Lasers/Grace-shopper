@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Cart} = require('../db/models/index')
+const {User, Order} = require('../db/models/index')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -25,7 +25,7 @@ router.post('/signup', async (req, res, next) => {
 
     //creating a new cart data associated with this user
 
-    await user.createCart({cartProducts: []})
+    await user.createOrder({status: 'open'})
 
     req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {

@@ -422,7 +422,23 @@ const orders = [
     status: 'open',
     userId: 1
   },
+  {
+    status: 'open',
+    userId: 2
+  },
+  {
+    status: 'fulfilled',
+    userId: 2
+  },
 
+  {
+    status: 'fulfilled',
+    userId: 3
+  },
+  {
+    status: 'open',
+    userId: 3
+  },
   {
     status: 'open',
     userId: 4
@@ -437,6 +453,41 @@ const carts = [
     productId: 1,
     qty: 3,
     price: 2050
+  },
+
+  {
+    orderId: 2,
+    productId: 3,
+    qty: 1,
+    price: 3099
+  },
+
+  {
+    orderId: 3,
+    productId: 1,
+    qty: 2,
+    price: 1000
+  },
+
+  {
+    orderId: 4,
+    productId: 1,
+    qty: 1,
+    price: 2050
+  },
+
+  {
+    orderId: 4,
+    productId: 15,
+    qty: 1,
+    price: 15000
+  },
+
+  {
+    orderId: 5,
+    productId: 15,
+    qty: 1,
+    price: 15000
   }
 ]
 

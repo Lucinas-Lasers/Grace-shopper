@@ -51,17 +51,12 @@ router.get('/:orderId', async (req, res, next) => {
   }
 })
 
-//show order by userId - right now, this does not filter only for open cart
+//show order by userId - only 1 open order will display - assumption is user only has 1 open cart.
 
 router.get('/user/:userId', async (req, res, next) => {
   try {
-    const userOrder = await User.findAll({
-      where: {id: req.params.userId},
-      include: [{model: Order}]
-    })
-
     const order = await Order.findAll({
-      where: {id: userOrder[0].orders[0].id},
+      where: {status: 'open'},
       include: [
         {
           model: Product,
@@ -69,6 +64,7 @@ router.get('/user/:userId', async (req, res, next) => {
         },
         {
           model: User,
+          where: {id: req.params.userId},
           attributes: ['id', 'firstName', 'lastName', 'email']
         }
       ]
@@ -103,4 +99,4 @@ router.put('/:orderId', async (req, res, next) => {
   }
 })
 
-//No cart delete cart API call - user always have one cart.
+//No "delete order" API call - user always have one cart.
