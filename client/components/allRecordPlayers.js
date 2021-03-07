@@ -29,6 +29,7 @@ class AllRecordPlayers extends React.Component {
                 <EditProduct
                   deleteItem={this.props.deleteSingleRecordPlayer}
                   product={element.id}
+                  type={element.type}
                 />
               ) : (
                 <div />

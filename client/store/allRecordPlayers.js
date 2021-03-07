@@ -57,7 +57,12 @@ export default function allRecordPlayerReducer(state = initialState, action) {
     case GET_ALL_RECORDPLAYERS:
       return {...state, loading: false, recordplayers: action.recordplayers}
     case DELETE_SINGLE_RECORD_PLAYER:
-      return state.filter(element => element.id !== action.recordplayer.id)
+      return {
+        ...state,
+        recordplayers: state.recordplayers.filter(
+          element => element.id !== action.recordplayer.id
+        )
+      }
     default:
       return state
   }

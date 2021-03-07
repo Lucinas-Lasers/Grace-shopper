@@ -49,7 +49,6 @@ class SingleRecordPlayer extends React.Component {
 
   componentDidMount() {
     this.props.fetchSingleRecordPlayer(this.props.match.params.id)
-    console.log('cdm', this.props.singleRecordPlayer.recordplayer)
 
     if (this.props.singleRecordPlayer.recordplayer) {
       const {
@@ -66,7 +65,6 @@ class SingleRecordPlayer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('CDU', prevProps)
     if (
       !prevProps.singleRecordPlayer.recordplayer &&
       this.props.singleRecordPlayer.recordplayer

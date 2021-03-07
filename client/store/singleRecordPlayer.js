@@ -44,7 +44,6 @@ export const fetchSingleRecordPlayer = (id, history) => async dispatch => {
 export const editSingleRecordPlayer = (info, history) => {
   return async dispatch => {
     try {
-      console.log('editthunk', info.id)
       let {data} = await axios.put(`/api/products/${info.id}`, info)
       dispatch(editedSingleRecordPlayer(data))
       console.log('post thunk', info.id)

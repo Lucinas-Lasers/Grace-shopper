@@ -1,18 +1,21 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 // Reducer
 
 const EditProduct = props => {
+  let type = props.type
+    .toLowerCase()
+    .split('_')
+    .join('')
   return (
     <div>
-      <Link to={`/recordplayer/${props.product}`}>
+      <Link to={`/${type}/${props.product}`}>
         <button className="editdelete" type="button">
           Edit
         </button>
       </Link>
       <button
-        id="studentdelete"
+        id=""
         type="button"
         onClick={() => props.deleteItem(props.product)}
       >
