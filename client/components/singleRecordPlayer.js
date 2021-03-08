@@ -15,8 +15,7 @@ class SingleRecordPlayer extends React.Component {
       name: '',
       description: '',
       year: '',
-      edit: false,
-      admin: true
+      edit: false
     }
     this.editButton = this.editButton.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -50,11 +49,9 @@ class SingleRecordPlayer extends React.Component {
 
   componentDidMount() {
     this.props.fetchSingleRecordPlayer(this.props.match.params.id)
-    console.log('cdm', this.props.singleRecordPlayer.recordplayer)
 
     if (this.props.singleRecordPlayer.recordplayer) {
       const {
-        id,
         name,
         description,
         year
@@ -68,13 +65,11 @@ class SingleRecordPlayer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('CDU', prevProps)
     if (
       !prevProps.singleRecordPlayer.recordplayer &&
       this.props.singleRecordPlayer.recordplayer
     ) {
       const {
-        id,
         name,
         description,
         year

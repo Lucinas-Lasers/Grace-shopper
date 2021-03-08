@@ -1,46 +1,36 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchAllRecords} from '../store/record'
-
-/*
-1. this page display all product
-2. this page will display data from .api/allRecords
-3. this page will thunk will dispatch the axios call to ./api/allRecords to fetch data
-4. redux store will provide state for all records to
-
-
-state {
-    allproducts
-    all records
-    all player
-    selected records
-    selected player
-    carts
-    currentUser
-    allUsers
-
-}
-
-*/
+import {fetchAllRecords, deleteSingleRecord} from '../store/record'
+import EditProduct from './editProduct'
 
 class AllRecords extends React.Component {
   componentDidMount() {
     this.props.fetchAllRecords()
-    //disptach thunk to bring data from ./api/allRecords
   }
 
   render() {
-    return this.props.allRecords[0] ? (
+    return !this.props.allRecords.loading ? (
       <div className="productList">
-        {this.props.allRecords.map(element => {
+        {this.props.allRecords.records.map(element => {
           return (
             <div key={element.id} className="productCard">
-              <div className="productCardItems">
-                <img src={element.image} />
-                <h2>{element.name}</h2>
-                <p>{element.artist}</p>
-              </div>
+              <Link to={`/record/${element.id}`}>
+                <div className="productCardItems">
+                  <img src={element.image} />
+                  <h2>{element.name}</h2>
+                  <p>{element.artist}</p>
+                </div>
+              </Link>
+              {this.props.user && this.props.user.admin ? (
+                <EditProduct
+                  deleteItem={this.props.deleteSingleRecord}
+                  product={element.id}
+                  type={element.type}
+                />
+              ) : (
+                <div />
+              )}
             </div>
           )
         })}
@@ -51,11 +41,17 @@ class AllRecords extends React.Component {
   }
 }
 
-const mapState = state => ({allRecords: state.recordReducer})
+const mapState = state => ({
+  allRecords: state.recordReducer,
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
   fetchAllRecords: () => {
     dispatch(fetchAllRecords())
+  },
+  deleteSingleRecord: id => {
+    dispatch(deleteSingleRecord(id))
   }
 })
 

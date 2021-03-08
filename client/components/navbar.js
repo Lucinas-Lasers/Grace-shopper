@@ -19,7 +19,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <p>Products</p>
         </div>
         <div className="productItems">
-          <Link to="/allRecords">
+          <Link to="/records">
             <div className="productOption">Albums</div>
           </Link>
           <Link to="/recordplayers">

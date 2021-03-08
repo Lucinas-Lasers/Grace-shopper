@@ -1,11 +1,11 @@
 import React from 'react'
 
-const RecordPlayerForm = props => {
+const RecordForm = props => {
   const {state, editButton, handleChange, handleSubmit} = props
   return (
-    <form id="recordPlayerForm" onSubmit={handleSubmit}>
+    <form id="recordform" onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="name">Name:</label>
+        <label htmlFor="name">Album:</label>
         <input name="name" onChange={handleChange} value={state.name} />
       </div>
       <div>
@@ -32,4 +32,4 @@ const RecordPlayerForm = props => {
   )
 }
 
-export default RecordPlayerForm
+export default RecordForm
