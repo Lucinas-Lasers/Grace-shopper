@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {fetchSingleRecord, editSingleRecord} from '../store/singleRecord'
 import {ComponentAddToCart} from './componentAddToCart'
 import RecordForm from './recordForm'
+import {fetchCartInfo} from '../store/cart'
 
 class SingleRecord extends React.Component {
   constructor() {
@@ -13,7 +14,8 @@ class SingleRecord extends React.Component {
       name: '',
       description: '',
       year: '',
-      edit: true
+      edit: true,
+      qty: ''
     }
     this.editButton = this.editButton.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -47,6 +49,9 @@ class SingleRecord extends React.Component {
 
   componentDidMount() {
     this.props.fetchSingleRecord(this.props.match.params.id)
+    if (this.props.user.id) {
+      this.props.getCartInfo(this.props.user.id)
+    }
 
     if (this.props.singleRecord.record) {
       const {name, description, year} = this.props.singleRecord.record
@@ -67,6 +72,9 @@ class SingleRecord extends React.Component {
         year
       })
     }
+    if (this.props.user.id && this.props.user.id !== prevProps.user.id) {
+      this.props.getCartInfo(this.props.user.id)
+    }
   }
 
   render() {
@@ -81,10 +89,15 @@ class SingleRecord extends React.Component {
             <h1>{record.artist}</h1>
             <p>{record.description}</p>
             <p>{record.price}</p>
-            <ComponentAddToCart record={record} />
             {record.tracks.map((track, ind) => {
               return <div key={ind}> {track}</div>
             })}
+            <ComponentAddToCart
+              record={record}
+              cart={this.props.cart}
+              getCartInfo={this.props.getCartInfo}
+            />
+
             {this.props.user.admin ? (
               !this.state.edit ? (
                 <RecordForm
@@ -115,7 +128,8 @@ class SingleRecord extends React.Component {
 
 const mapState = state => ({
   singleRecord: state.singleRecordReducer,
-  user: state.user
+  user: state.user,
+  cart: state.cartReducer
 })
 
 const mapDispatch = dispatch => ({
@@ -124,7 +138,8 @@ const mapDispatch = dispatch => ({
   },
   editSingleRecord: info => {
     dispatch(editSingleRecord(info))
-  }
+  },
+  getCartInfo: id => dispatch(fetchCartInfo(id))
 })
 
 export const singleRecord = connect(mapState, mapDispatch)(SingleRecord)
