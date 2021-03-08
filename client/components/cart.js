@@ -75,45 +75,49 @@ class Cart extends React.Component {
   render() {
     // const cart = this.props.cartProducts
     console.log('this.props', this.props)
-    console.log('products', this.props.cart)
+    console.log('products', this.props.cart.products)
     console.log('help', this.props.cart.length)
-    if (this.props.cart.products) {
-      return (
-        <div className="cartList">
-          {this.state.products.map((item, indx) => {
-            return (
-              <div className="cartItem" key="1">
-                <div>{item.name}</div>
-                <img src={item.image} />
-                <div>
-                  <label htmlFor={item.name}>
-                    <small>Quantity</small>
-                  </label>
-                  <input
-                    name={item.name}
-                    type="number"
-                    value={item['product-order'].qty}
-                    onChange={e => this.handleChange(e, indx)}
-                  />
+    if (this.props.cart.userId) {
+      if (this.props.cart.products.length) {
+        return (
+          <div className="cartList">
+            {this.state.products.map((item, indx) => {
+              return (
+                <div className="cartItem" key="1">
+                  <div>{item.name}</div>
+                  <img src={item.image} />
+                  <div>
+                    <label htmlFor={item.name}>
+                      <small>Quantity</small>
+                    </label>
+                    <input
+                      name={item.name}
+                      type="number"
+                      value={item['product-order'].qty}
+                      onChange={e => this.handleChange(e, indx)}
+                    />
+                  </div>
                 </div>
-              </div>
-            )
-          })}
-          <div>
-            Price:{' '}
-            {this.state.products
-              .reduce((accumulator, current) => {
-                return (
-                  accumulator + current['product-order'].qty * current.price
-                )
-              }, 0)
-              .toFixed(2)}
+              )
+            })}
+            <div>
+              Price:{' '}
+              {this.state.products
+                .reduce((accumulator, current) => {
+                  return (
+                    accumulator + current['product-order'].qty * current.price
+                  )
+                }, 0)
+                .toFixed(2)}
+            </div>
+            <form onSubmit={this.handleSubmit}>
+              <input type="submit" value="Purchase" />
+            </form>
           </div>
-          <form onSubmit={this.handleSubmit}>
-            <input type="submit" value="Purchase" />
-          </form>
-        </div>
-      )
+        )
+      } else {
+        return <div>No Products</div>
+      }
     } else {
       return <div>Hi</div>
     }
