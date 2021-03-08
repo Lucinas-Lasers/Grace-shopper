@@ -3,41 +3,13 @@ import {connect} from 'react-redux'
 import {fetchCartInfo} from '../store/cart'
 import {fetchProduct} from '../store/guestCart'
 
-const dummy = [
-  {
-    name: 'album1',
-    img: 'https://i.imgur.com/QErPh1R.png',
-    description: 'Mooo-sic',
-    price: 5.99,
-    qty: '100000',
-    productAmount: 2,
-    year: '2000',
-    type: 'album',
-    artist: 'ACDC',
-    genre: 'rock',
-    tracks: 'song1,song2,song3'
-  },
-  {
-    name: 'album2',
-    img: 'https://i.imgur.com/QErPh1R.png',
-    description: 'Mooo-sic',
-    price: 2.99,
-    qty: '100000',
-    productAmount: 1,
-    year: '2000',
-    type: 'album',
-    artist: 'ACDC',
-    genre: 'rock',
-    tracks: 'song1,song2,song3'
-  }
-]
-
 class Cart extends React.Component {
   constructor(props) {
     super(props)
     this.state = {orderId: '', products: []}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.localStorageChange = this.localStorageChange.bind(this)
   }
   componentDidMount() {
     if (this.props.user.id) {
@@ -50,6 +22,7 @@ class Cart extends React.Component {
       let localStorage = JSON.parse(window.localStorage.getItem('cart'))
       const localProducts = Object.entries(localStorage)
       this.props.getProducts(localProducts)
+      this.setState(localStorage)
       // localProducts.forEach((product) => this.props.getProducts(product[0]))
     }
   }
@@ -77,11 +50,19 @@ class Cart extends React.Component {
     this.setState({products: []})
   }
 
+  localStorageChange(e, id) {
+    let newNumber = e.target.value
+    let localStorage = JSON.parse(window.localStorage.getItem('cart'))
+    localStorage[id].qty = newNumber
+    window.localStorage.setItem('cart', JSON.stringify(localStorage))
+    this.setState(localStorage)
+  }
+
   render() {
     // const cart = this.props.cartProducts
-    console.log('this.props', this.props)
-    console.log('products', this.props.cart.products)
-    console.log('help', this.props.cart.length)
+    // console.log('this.props', this.props)
+    // console.log('products', this.props.cart.products)
+    // console.log('help', this.props.cart.length)
     if (this.props.cart.userId) {
       if (this.props.cart.products.length) {
         return (
@@ -124,14 +105,22 @@ class Cart extends React.Component {
         return <div>No Products</div>
       }
     } else if (window.localStorage.getItem('cart')) {
-      let item = this.props.guestProducts
+      let productsStorage = this.props.guestProducts
+
       return (
         <div className="cartList">
-          {item.map(item => {
+          {productsStorage.map(product => {
+            let item = product.data
             return (
               <div className="cartItem" key="1">
                 <div>{item.name}</div>
                 <img src={item.image} />
+                <p>
+                  Price: {`$${(item.price / 1000).toFixed(2)}`}{' '}
+                  {`($${(item.price * this.state[item.id].qty / 1000).toFixed(
+                    2
+                  )})`}
+                </p>
                 <div>
                   <label htmlFor={item.name}>
                     <small>Quantity</small>
@@ -139,13 +128,26 @@ class Cart extends React.Component {
                   <input
                     name={item.name}
                     type="number"
-                    // value={item['product-order'].qty}
-                    onChange={e => this.handleChange(e, indx)}
+                    value={this.state[item.id].qty}
+                    min="1"
+                    max={`${item.quantity}`}
+                    onChange={e => {
+                      this.localStorageChange(e, item.id)
+                    }}
                   />
                 </div>
               </div>
             )
           })}
+          {`Price: ${(
+            productsStorage.reduce((accumulator, currentElem) => {
+              return (
+                accumulator +
+                JSON.parse(this.state[currentElem.data.id].qty) *
+                  JSON.parse(currentElem.data.price)
+              )
+            }, 0) / 1000
+          ).toFixed(2)}`}
         </div>
       )
     } else {
