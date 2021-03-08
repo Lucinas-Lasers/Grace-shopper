@@ -34,75 +34,102 @@ const dummy = [
 class Cart extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {historyArray: dummy}
+    this.state = {orderId: '', products: []}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  async componentDidMount() {
-    await this.props.cartInfo(this.props.states.id)
+  componentDidMount() {
+    if (this.props.user.id) {
+      this.props.getCartInfo(this.props.user.id)
+
+      this.setState({
+        orderId: this.props.cart.id,
+        products: this.props.cart.products
+      })
+    }
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.user.id && this.props.user.id !== prevProps.user.id) {
+      await this.props.getCartInfo(this.props.user.id)
+      this.setState({
+        orderId: this.props.cart.id,
+        products: this.props.cart.products
+      })
+    }
   }
 
   handleChange(e, indx) {
-    let item = this.state.historyArray
-    item[indx].productAmount = e.target.value
-    this.setState({historyArray: item})
+    console.log('e', e)
+    let item = this.state.products
+    item[indx]['product-order'].qty = e.target.value
+    this.setState({products: item})
   }
 
   handleSubmit(e) {
     e.preventDefault()
     console.log('submitted')
-    this.setState({historyArray: []})
+    this.setState({products: []})
   }
 
   render() {
     // const cart = this.props.cartProducts
     console.log('this.props', this.props)
-    console.log('products', this.props.cartProducts)
-    return (
-      <div className="cartList">
-        {this.state.historyArray.map((item, indx) => {
-          return (
-            <div className="cartItem" key="1">
-              <div>{item.name}</div>
-              <img src={item.img} />
-              <div>
-                <label htmlFor={item.name}>
-                  <small>Quantity</small>
-                </label>
-                <input
-                  name={item.name}
-                  type="number"
-                  value={item.productAmount}
-                  onChange={e => this.handleChange(e, indx)}
-                />
+    console.log('products', this.props.cart)
+    console.log('help', this.props.cart.length)
+    if (this.props.cart.products) {
+      return (
+        <div className="cartList">
+          {this.state.products.map((item, indx) => {
+            return (
+              <div className="cartItem" key="1">
+                <div>{item.name}</div>
+                <img src={item.image} />
+                <div>
+                  <label htmlFor={item.name}>
+                    <small>Quantity</small>
+                  </label>
+                  <input
+                    name={item.name}
+                    type="number"
+                    value={item['product-order'].qty}
+                    onChange={e => this.handleChange(e, indx)}
+                  />
+                </div>
               </div>
-            </div>
-          )
-        })}
-        <div>
-          Price:{' '}
-          {this.state.historyArray
-            .reduce((accumulator, current) => {
-              return accumulator + current.productAmount * current.price
-            }, 0)
-            .toFixed(2)}
+            )
+          })}
+          <div>
+            Price:{' '}
+            {this.state.products
+              .reduce((accumulator, current) => {
+                return (
+                  accumulator + current['product-order'].qty * current.price
+                )
+              }, 0)
+              .toFixed(2)}
+          </div>
+          <form onSubmit={this.handleSubmit}>
+            <input type="submit" value="Purchase" />
+          </form>
         </div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="submit" value="Purchase" />
-        </form>
-      </div>
-    )
+      )
+    } else {
+      return <div>Hi</div>
+    }
   }
 }
 
 const mapState = state => ({
-  cartProducts: state.cart[0],
-  states: state.user
+  cart: state.cartReducer,
+  user: state.user
 })
 
 const mapDispatch = dispatch => {
   return {
-    cartInfo: id => dispatch(fetchCartInfo(id))
+    cartInfo: id => dispatch(fetchCartInfo(id)),
+
+    getCartInfo: id => dispatch(fetchCartInfo(id))
   }
 }
 

@@ -10,7 +10,6 @@ import EditProduct from './editProduct'
 class AllRecordPlayers extends React.Component {
   componentDidMount() {
     this.props.fetchAllRecordPlayers()
-    console.log(this.props)
   }
 
   render() {

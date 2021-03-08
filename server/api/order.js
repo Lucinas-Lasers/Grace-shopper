@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product, Order, User} = require('../db/models')
+const {Product, Order, User, ProductOrder} = require('../db/models')
 
 module.exports = router
 
@@ -56,11 +56,15 @@ router.get('/:orderId', async (req, res, next) => {
 router.get('/user/:userId', async (req, res, next) => {
   try {
     const order = await Order.findAll({
-      where: {status: 'open'},
+
+      where: {
+        userId: req.params.userId,
+        status: 'open'
+      },
       include: [
         {
           model: Product,
-          attributes: ['id', 'albumTitle', 'artist', 'type']
+          attributes: ['id', 'name', 'artist', 'type', 'price', 'image']
         },
         {
           model: User,
@@ -80,20 +84,22 @@ router.get('/user/:userId', async (req, res, next) => {
 
 router.put('/:orderId', async (req, res, next) => {
   try {
-    const order = await await Order.findAll({
-      where: {id: req.params.orderId},
-      include: [
-        {
-          model: Product,
-          attributes: ['id', 'albumTitle', 'artist', 'type']
-        },
-        {
-          model: User,
-          attributes: ['id', 'firstName', 'lastName', 'email']
-        }
-      ]
+    const [order, status] = await ProductOrder.findOrCreate({
+      where: {
+        orderId: req.params.orderId,
+        productId: req.body.productId
+      },
+      defaults: {
+        orderId: req.params.orderId,
+        productId: req.body.productId,
+        price: req.body.price,
+        qty: req.body.qty
+      }
     })
-    await order.update(req.body)
+    if (!status) {
+      await order.update(req.body)
+    }
+    res.json(order)
   } catch (err) {
     next(err)
   }

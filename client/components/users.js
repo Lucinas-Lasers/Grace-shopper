@@ -9,7 +9,6 @@ class AllUsers extends React.Component {
   }
 
   render() {
-    console.log('props', this.props)
     return !this.props.user && this.props.allUsers[0] ? (
       <div className="albumList">
         {this.props.allUsers.map(element => {
