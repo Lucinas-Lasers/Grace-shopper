@@ -46,7 +46,6 @@ export const editSingleRecordPlayer = (info, history) => {
     try {
       let {data} = await axios.put(`/api/products/${info.id}`, info)
       dispatch(editedSingleRecordPlayer(data))
-      console.log('post thunk', info.id)
       history.push(`/recordplayer/${info.id}`)
     } catch (err) {
       console.log(err)

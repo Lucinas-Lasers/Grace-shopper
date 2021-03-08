@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 
-import cart from './cart'
+import cartReducer from './cart'
 
 import recordReducer from './record'
 import singleRecordReducer from './singleRecord'
@@ -14,7 +14,7 @@ import allUsersReducer from './allUsers'
 
 const reducer = combineReducers({
   user,
-  cart,
+  cartReducer,
   recordReducer,
   singleRecordReducer,
   allRecordPlayerReducer,

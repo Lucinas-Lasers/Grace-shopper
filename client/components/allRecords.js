@@ -3,10 +3,19 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchAllRecords, deleteSingleRecord} from '../store/record'
 import EditProduct from './editProduct'
+import {fetchCartInfo} from '../store/cart'
 
 class AllRecords extends React.Component {
   componentDidMount() {
     this.props.fetchAllRecords()
+    if (this.props.user.id) {
+      this.props.updateCart(this.props.user.id)
+    }
+  }
+  async componentDidUpdate(prevprops) {
+    if (this.props.user.id && this.props.user.id !== prevprops.user.id) {
+      await this.props.updateCart(this.props.user.id)
+    }
   }
 
   render() {
@@ -43,7 +52,8 @@ class AllRecords extends React.Component {
 
 const mapState = state => ({
   allRecords: state.recordReducer,
-  user: state.user
+  user: state.user,
+  cart: state.cartReducer
 })
 
 const mapDispatch = dispatch => ({
@@ -52,7 +62,8 @@ const mapDispatch = dispatch => ({
   },
   deleteSingleRecord: id => {
     dispatch(deleteSingleRecord(id))
-  }
+  },
+  updateCart: id => dispatch(fetchCartInfo(id))
 })
 
 export const allRecords = connect(mapState, mapDispatch)(AllRecords)
