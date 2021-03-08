@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCartInfo} from '../store/cart'
+import {fetchProduct} from '../store/guestCart'
 
 const dummy = [
   {
@@ -41,11 +42,15 @@ class Cart extends React.Component {
   componentDidMount() {
     if (this.props.user.id) {
       this.props.getCartInfo(this.props.user.id)
-
       this.setState({
         orderId: this.props.cart.id,
         products: this.props.cart.products
       })
+    } else if (!this.props.user.id) {
+      let localStorage = JSON.parse(window.localStorage.getItem('cart'))
+      const localProducts = Object.entries(localStorage)
+      this.props.getProducts(localProducts)
+      // localProducts.forEach((product) => this.props.getProducts(product[0]))
     }
   }
 
@@ -118,22 +123,51 @@ class Cart extends React.Component {
       } else {
         return <div>No Products</div>
       }
+    } else if (window.localStorage.getItem('cart')) {
+      let item = this.props.guestProducts
+      return (
+        <div className="cartList">
+          {item.map(item => {
+            return (
+              <div className="cartItem" key="1">
+                <div>{item.name}</div>
+                <img src={item.image} />
+                <div>
+                  <label htmlFor={item.name}>
+                    <small>Quantity</small>
+                  </label>
+                  <input
+                    name={item.name}
+                    type="number"
+                    // value={item['product-order'].qty}
+                    onChange={e => this.handleChange(e, indx)}
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )
     } else {
-      return <div>Hi</div>
+      return <div>No cart, buster.</div>
     }
   }
 }
 
 const mapState = state => ({
   cart: state.cartReducer,
-  user: state.user
+  user: state.user,
+
+  guestProducts: state.guestReducer.cart
 })
 
 const mapDispatch = dispatch => {
   return {
     cartInfo: id => dispatch(fetchCartInfo(id)),
 
-    getCartInfo: id => dispatch(fetchCartInfo(id))
+    getCartInfo: id => dispatch(fetchCartInfo(id)),
+
+    getProducts: id => dispatch(fetchProduct(id))
   }
 }
 
