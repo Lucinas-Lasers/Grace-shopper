@@ -1,35 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCartInfo} from '../store/cart'
-
-const dummy = [
-  {
-    name: 'album1',
-    img: 'https://i.imgur.com/QErPh1R.png',
-    description: 'Mooo-sic',
-    price: 5.99,
-    qty: '100000',
-    productAmount: 2,
-    year: '2000',
-    type: 'album',
-    artist: 'ACDC',
-    genre: 'rock',
-    tracks: 'song1,song2,song3'
-  },
-  {
-    name: 'album2',
-    img: 'https://i.imgur.com/QErPh1R.png',
-    description: 'Mooo-sic',
-    price: 2.99,
-    qty: '100000',
-    productAmount: 1,
-    year: '2000',
-    type: 'album',
-    artist: 'ACDC',
-    genre: 'rock',
-    tracks: 'song1,song2,song3'
-  }
-]
+import {fetchCartInfo, updateToCart, buyCartItem} from '../store/cart'
 
 class Cart extends React.Component {
   constructor(props) {
@@ -59,16 +30,40 @@ class Cart extends React.Component {
     }
   }
 
-  handleChange(e, indx) {
-    console.log('e', e)
+  async handleChange(e, indx) {
     let item = this.state.products
     item[indx]['product-order'].qty = e.target.value
+    item[indx]['product-order'].price =
+      item[indx]['product-order'].qty * item[indx].price
+    await this.props.updateToCart(item[indx]['product-order'])
     this.setState({products: item})
+    await this.props.getCartInfo(this.props.user.id)
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
     console.log('submitted')
+
+    //we need to check to see if each individual item is there, and if the quantity is good//turn order to pending to fufilled, delete items from inventiory and send back a new cart
+    //redirect person to page with order confirmation page
+    //
+    // check inventory function, if this function returns true, then we go to another page, else we
+    const checkArray = []
+    this.state.products.forEach(product => {
+      if (product['product-order'].qty > product.quantity) {
+        return checkArray.push(false)
+      }
+    })
+    console.log('checkarray', checkArray)
+    console.log(this.state.products[0])
+    // if (!checkArray.length) {
+    //   await Promise.all(
+    //     this.state.products.forEach(async (element) => {
+    //       console.log(element)
+    //       // await this.props.buyToCart(element)
+    //     })
+    //   )
+    // }
     this.setState({products: []})
   }
 
@@ -78,42 +73,53 @@ class Cart extends React.Component {
     console.log('products', this.props.cart)
     console.log('help', this.props.cart.length)
     if (this.props.cart.products) {
-      return (
-        <div className="cartList">
-          {this.state.products.map((item, indx) => {
-            return (
-              <div className="cartItem" key="1">
-                <div>{item.name}</div>
-                <img src={item.image} />
-                <div>
-                  <label htmlFor={item.name}>
-                    <small>Quantity</small>
-                  </label>
-                  <input
-                    name={item.name}
-                    type="number"
-                    value={item['product-order'].qty}
-                    onChange={e => this.handleChange(e, indx)}
-                  />
+      if (this.props.cart.products.length) {
+        return (
+          <div className="cartList">
+            {this.state.products.map((item, indx) => {
+              return (
+                <div className="cartItem" key="1">
+                  <div>{item.name}</div>
+                  <img src={item.image} />
+                  <div>
+                    <label htmlFor={item.name}>
+                      <small>Quantity</small>
+                    </label>
+                    <input
+                      name={item.name}
+                      type="number"
+                      date="20"
+                      value={item['product-order'].qty}
+                      onChange={e => this.handleChange(e, indx)}
+                    />
+                  </div>
+                  <div>Price: {(item.price / 1000).toFixed(2)}</div>
+                  <div>
+                    Total Price:{' '}
+                    {(item['product-order'].qty * item.price / 1000).toFixed(2)}
+                  </div>
                 </div>
-              </div>
-            )
-          })}
-          <div>
-            Price:{' '}
-            {this.state.products
-              .reduce((accumulator, current) => {
-                return (
-                  accumulator + current['product-order'].qty * current.price
-                )
-              }, 0)
-              .toFixed(2)}
+              )
+            })}
+            <div>
+              Purchase Total:{' '}
+              {this.state.products
+                .reduce((accumulator, current) => {
+                  return (
+                    accumulator +
+                    current['product-order'].qty * current.price / 1000
+                  )
+                }, 0)
+                .toFixed(2)}
+            </div>
+            <form onSubmit={this.handleSubmit}>
+              <input type="submit" value="Purchase" />
+            </form>
           </div>
-          <form onSubmit={this.handleSubmit}>
-            <input type="submit" value="Purchase" />
-          </form>
-        </div>
-      )
+        )
+      } else {
+        return <div> No items in Cart</div>
+      }
     } else {
       return <div>Hi</div>
     }
@@ -129,7 +135,9 @@ const mapDispatch = dispatch => {
   return {
     cartInfo: id => dispatch(fetchCartInfo(id)),
 
-    getCartInfo: id => dispatch(fetchCartInfo(id))
+    getCartInfo: id => dispatch(fetchCartInfo(id)),
+    updateToCart: id => dispatch(updateToCart(id)),
+    buyCartItem: id => dispatch(buyCartItem(id))
   }
 }
 

@@ -7,6 +7,7 @@ import history from '../history'
 const GET_CART_INFO = 'GET_CART_INFO'
 const ADD_TO_CART = 'ADD_TO_CART'
 const UPDATE_TO_CART = 'UPDATE_TO_CART'
+const BUY_CART_ITEM = 'BUY_CART_ITEM'
 
 /**
  * INITIAL STATE
@@ -25,6 +26,11 @@ export const addedToCart = item => ({
 })
 export const updatedToCart = item => ({
   type: UPDATE_TO_CART,
+  item
+})
+
+export const boughtCartItem = item => ({
+  type: BUY_CART_ITEM,
   item
 })
 
@@ -55,12 +61,25 @@ export const addingToCart = id => async dispatch => {
 
 export const updateToCart = id => async dispatch => {
   try {
-    let orderId = id.orderId
+    let orderId = id.orderId || id.id
     const {data} = await axios.put(`/api/order/${orderId}`, id)
     dispatch(updatedToCart(data))
-    history.push(`/record/${id.productId}`)
+    let home = history.location.pathname
+    history.push(home)
+    console.log(home)
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const buyCartItem = id => {
+  return async dispatch => {
+    try {
+      const {data} = axios.put(`/products/${id.id}`, id)
+      dispatch(boughtToCart(data))
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

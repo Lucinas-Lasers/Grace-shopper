@@ -36,7 +36,7 @@ router.get('/:orderId', async (req, res, next) => {
       include: [
         {
           model: Product,
-          attributes: ['id', 'albumTitle', 'artist', 'type']
+          attributes: ['id', 'name', 'albumTitle', 'artist', 'type']
         },
         {
           model: User,
@@ -56,7 +56,6 @@ router.get('/:orderId', async (req, res, next) => {
 router.get('/user/:userId', async (req, res, next) => {
   try {
     const order = await Order.findAll({
-
       where: {
         userId: req.params.userId,
         status: 'open'
@@ -64,7 +63,15 @@ router.get('/user/:userId', async (req, res, next) => {
       include: [
         {
           model: Product,
-          attributes: ['id', 'name', 'artist', 'type', 'price', 'image']
+          attributes: [
+            'id',
+            'name',
+            'artist',
+            'type',
+            'price',
+            'image',
+            'quantity'
+          ]
         },
         {
           model: User,
