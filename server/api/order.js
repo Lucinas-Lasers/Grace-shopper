@@ -56,6 +56,7 @@ router.get('/:orderId', async (req, res, next) => {
 router.get('/user/:userId', async (req, res, next) => {
   try {
     const order = await Order.findAll({
+
       where: {
         userId: req.params.userId,
         status: 'open'

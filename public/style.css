@@ -64,7 +64,6 @@ form div {
   display: flex;
   width: auto;
   height: 55px;
-  margin-bottom: 10px;
   background: dimgray;
   justify-content: space-between;
 }
@@ -224,7 +223,7 @@ SVG Icons - svgicons.sparkk.fr
   background-color: #7a7a7a;
   width: 170px;
   height: 250px;
-  color: white;
+  margin: 25px 15px;
   box-shadow: 0px 0px 3px 1px black;
   transition: background 0.5s;
 }
@@ -242,6 +241,7 @@ SVG Icons - svgicons.sparkk.fr
 
 .productCardItems * {
   margin: 8px 0px;
+  color: white;
 }
 
 .productCardItems > img {
