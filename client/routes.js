@@ -38,10 +38,10 @@ class Routes extends Component {
         <Route path="/recordplayers" component={allRecordPlayers} />
         <Route path="/recordplayer/:id" component={singleRecordPlayer} />
         <Route path="/users" component={allUsers} />
+        <Route path="/home" component={UserHome} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

@@ -149,184 +149,154 @@ const products = [
     image: `https://media.pitchfork.com/photos/5c2cdf59673bd655963c817c/1:1/w_600/X%20100PRE_Bad%20Bunny.jpg`
   },
   {
-    name: 'X 100PRE ',
-    artist: 'Bad Bunny',
-    description: `X100PRE thrives as Bad Bunny's debut body of work, served with a modern sensibility of what Latin Urban can overcome and how influential it can be. X100PRE presents itself as a compilation of personal desires that are often nostalgic, celebratory, youthful and even introspective without losing relation to its listeners own experiences. Because of this, X100PRE has become a monumental masterpiece to the current Latino generations, capturing their very essence through words, sounds and colors.
+    name: 'Lemonade',
+    artist: 'Beyonce',
+    description: `Lemonade is a visual album – a number of music videos offset by chapter titles like “Intuition,” “Denial,” “Apathy,” “Emptiness” and, eventually, “Resurrection” – connected by a voiceover from Beyoncé reading poetry by Warsan Shire. Story Arc: ... It starts with Beyoncé questioning her relationship.
 `,
     tracks: [
-      ` NI BIEN NI MAL`,
-      `200 MPHFeaturing`,
-      `¿Quién Tú Eres?`,
-      `Caro`,
-      `Tenemos Que Hablar`,
-      `Otra Noche en Miami`,
-      `Ser Bichote`,
-      `Si Estuviésemos Juntos`,
-      `Solo de Mí`,
-      `Cuando Perriabas`,
-      `La RomanaFeaturing`,
-      `Como Antes`,
-      `RLNDT`,
-      `Estamos Bien`,
-      `MÍAFeaturing `
+      'Pray You Catch Me',
+      'Hold Up',
+      "Don't Hurt Yourself",
+      'Sorry',
+      '6 Inch',
+      'Daddy Lessons',
+      'Love Drought',
+      'Sandcastles',
+      'Forward',
+      'Freedom',
+      'All Night',
+      'Formation'
     ],
     price: 24980,
     type: `Record`,
-    genre: 'Reggaeton',
-    albumTitle: `X 100PRE `,
+    genre: 'R&B',
+    albumTitle: `Lemonade`,
     year: 2018,
     quantity: 10,
-    image: `https://media.pitchfork.com/photos/5c2cdf59673bd655963c817c/1:1/w_600/X%20100PRE_Bad%20Bunny.jpg`
+    image: `https://images-na.ssl-images-amazon.com/images/I/815f0Q7RMrL._SX522_.jpg`
   },
   {
-    name: 'X 100PRE ',
-    artist: 'Bad Bunny',
-    description: `X100PRE thrives as Bad Bunny's debut body of work, served with a modern sensibility of what Latin Urban can overcome and how influential it can be. X100PRE presents itself as a compilation of personal desires that are often nostalgic, celebratory, youthful and even introspective without losing relation to its listeners own experiences. Because of this, X100PRE has become a monumental masterpiece to the current Latino generations, capturing their very essence through words, sounds and colors.
+    name: 'The Dark Side of the Moon',
+    artist: 'Pink Floyd',
+    description: `A concept album, the themes of The Dark Side of the Moon explore conflict, greed, time, death, and mental illness. Snippets from interviews with the band's road crew, as well as philosophical quotations, were also used. 
 `,
     tracks: [
-      ` NI BIEN NI MAL`,
-      `200 MPHFeaturing`,
-      `¿Quién Tú Eres?`,
-      `Caro`,
-      `Tenemos Que Hablar`,
-      `Otra Noche en Miami`,
-      `Ser Bichote`,
-      `Si Estuviésemos Juntos`,
-      `Solo de Mí`,
-      `Cuando Perriabas`,
-      `La RomanaFeaturing`,
-      `Como Antes`,
-      `RLNDT`,
-      `Estamos Bien`,
-      `MÍAFeaturing `
+      'Speak to Me',
+      'Breathe',
+      'On the Run',
+      'Time',
+      'The Great Gig in the Sky',
+      'Money',
+      'Us and Them',
+      'Any Colour You Like',
+      'Brain Damage',
+      'Eclipse'
     ],
     price: 24980,
     type: `Record`,
-    genre: 'Reggaeton',
-    albumTitle: `X 100PRE `,
-    year: 2018,
+    genre: 'Rock',
+    albumTitle: `The Dark Side of the Moon`,
+    year: 1973,
     quantity: 10,
-    image: `https://media.pitchfork.com/photos/5c2cdf59673bd655963c817c/1:1/w_600/X%20100PRE_Bad%20Bunny.jpg`
+    image: `https://images-na.ssl-images-amazon.com/images/I/51lsZBhvHRL._SX425_.jpg`
   },
   {
-    name: 'X 100PRE ',
-    artist: 'Bad Bunny',
-    description: `X100PRE thrives as Bad Bunny's debut body of work, served with a modern sensibility of what Latin Urban can overcome and how influential it can be. X100PRE presents itself as a compilation of personal desires that are often nostalgic, celebratory, youthful and even introspective without losing relation to its listeners own experiences. Because of this, X100PRE has become a monumental masterpiece to the current Latino generations, capturing their very essence through words, sounds and colors.
+    name: `That's Life`,
+    artist: 'Willie Nelson',
+    description: `Honoring the enduring inspiration of Frank Sinatra, That's Life is Willie Nelson s second album of classics made famous by The Chairman Of The Board. Willie delivers 11 new studio performances, coming alive in a musical landscape animated by lush string and vibrant horn arrangements on an album mixed by recording industry legend Al Schmitt (who's recorded and mixed more than 150 gold and platinum albums and won more Grammy Awards than any other engineer or mixer). The album cover features a brand new painting of Willie and his iconic guitar, Trigger, standing in the glow of a twilight streetlamp, evoking classic Sinatra album covers of yore.
 `,
     tracks: [
-      ` NI BIEN NI MAL`,
-      `200 MPHFeaturing`,
-      `¿Quién Tú Eres?`,
-      `Caro`,
-      `Tenemos Que Hablar`,
-      `Otra Noche en Miami`,
-      `Ser Bichote`,
-      `Si Estuviésemos Juntos`,
-      `Solo de Mí`,
-      `Cuando Perriabas`,
-      `La RomanaFeaturing`,
-      `Como Antes`,
-      `RLNDT`,
-      `Estamos Bien`,
-      `MÍAFeaturing `
+      'Nice Work If You Can Get It',
+      'Just in Time',
+      'A Cottage for Sale',
+      "I've Got You Under My Skin",
+      'You Make Me Feel So Young',
+      "I Won't Dance",
+      "That's Life",
+      'Luck Be a Lady',
+      'In the Wee Small Hours of the Morning',
+      "Learnin' the Blues",
+      'Lonesome Road'
     ],
-    price: 24980,
+    price: 209000,
     type: `Record`,
-    genre: 'Reggaeton',
-    albumTitle: `X 100PRE `,
-    year: 2018,
+    genre: 'Country',
+    albumTitle: `That's Life`,
+    year: 2021,
     quantity: 10,
-    image: `https://media.pitchfork.com/photos/5c2cdf59673bd655963c817c/1:1/w_600/X%20100PRE_Bad%20Bunny.jpg`
+    image: `https://images-na.ssl-images-amazon.com/images/I/51dEMy-P7kL._SX425_.jpg`
   },
   {
-    name: 'X 100PRE ',
-    artist: 'Bad Bunny',
-    description: `X100PRE thrives as Bad Bunny's debut body of work, served with a modern sensibility of what Latin Urban can overcome and how influential it can be. X100PRE presents itself as a compilation of personal desires that are often nostalgic, celebratory, youthful and even introspective without losing relation to its listeners own experiences. Because of this, X100PRE has become a monumental masterpiece to the current Latino generations, capturing their very essence through words, sounds and colors.
+    name: 'John Coltrane & Johnny Hartman ',
+    artist: 'McCoy Tyner, John Coltrane, Johnny Hartman',
+    description: `It was a match made in heaven: Hartman's beautiful baritone voice and Coltrane's exploratory yet empathetic tenor sax. This 1963 Impulse LP is a career highlight for both these jazz giants!
 `,
     tracks: [
-      ` NI BIEN NI MAL`,
-      `200 MPHFeaturing`,
-      `¿Quién Tú Eres?`,
-      `Caro`,
-      `Tenemos Que Hablar`,
-      `Otra Noche en Miami`,
-      `Ser Bichote`,
-      `Si Estuviésemos Juntos`,
-      `Solo de Mí`,
-      `Cuando Perriabas`,
-      `La RomanaFeaturing`,
-      `Como Antes`,
-      `RLNDT`,
-      `Estamos Bien`,
-      `MÍAFeaturing `
+      "They Say It's Wonderful",
+      'Dedicated to You',
+      'My One and Only Love',
+      'Lush Life',
+      'You Are Too Beautiful',
+      'Autumn Serenade'
     ],
-    price: 24980,
+    price: 221400,
     type: `Record`,
-    genre: 'Reggaeton',
-    albumTitle: `X 100PRE `,
+    genre: 'Jazz',
+    albumTitle: `John Coltrane & Johnny Hartman`,
     year: 2018,
     quantity: 10,
-    image: `https://media.pitchfork.com/photos/5c2cdf59673bd655963c817c/1:1/w_600/X%20100PRE_Bad%20Bunny.jpg`
+    image: `https://images-na.ssl-images-amazon.com/images/I/61Z-qRw050L._SX425_.jpg`
   },
   {
-    name: 'X 100PRE ',
-    artist: 'Bad Bunny',
-    description: `X100PRE thrives as Bad Bunny's debut body of work, served with a modern sensibility of what Latin Urban can overcome and how influential it can be. X100PRE presents itself as a compilation of personal desires that are often nostalgic, celebratory, youthful and even introspective without losing relation to its listeners own experiences. Because of this, X100PRE has become a monumental masterpiece to the current Latino generations, capturing their very essence through words, sounds and colors.
+    name: 'Hill Climber',
+    artist: 'Vulfpeck',
+    description: `Vulfpeck's 4th full-length studio album Hill Climber was released on December 7th of 2018. Unlike previous albums, it chooses to not feature a wide array of musical guests, and instead focuses on multi-instrumentalist Theo Katzman.
 `,
     tracks: [
-      ` NI BIEN NI MAL`,
-      `200 MPHFeaturing`,
-      `¿Quién Tú Eres?`,
-      `Caro`,
-      `Tenemos Que Hablar`,
-      `Otra Noche en Miami`,
-      `Ser Bichote`,
-      `Si Estuviésemos Juntos`,
-      `Solo de Mí`,
-      `Cuando Perriabas`,
-      `La RomanaFeaturing`,
-      `Como Antes`,
-      `RLNDT`,
-      `Estamos Bien`,
-      `MÍAFeaturing `
+      'Half Of The Way',
+      'Darwin Derby',
+      'Lonely Town',
+      'Love Is A Beautiful Thing',
+      'For Survival',
+      'Soft Parade',
+      'Lost My Treble Long Ago',
+      'Disco Ulysses (Instrumental)',
+      'The Cup Stacker',
+      'It Gets Funkier IV'
     ],
-    price: 24980,
+    price: 13990,
     type: `Record`,
-    genre: 'Reggaeton',
-    albumTitle: `X 100PRE `,
+    genre: 'Funk',
+    albumTitle: `Hill Climber`,
     year: 2018,
     quantity: 10,
-    image: `https://media.pitchfork.com/photos/5c2cdf59673bd655963c817c/1:1/w_600/X%20100PRE_Bad%20Bunny.jpg`
+    image: `https://m.media-amazon.com/images/I/91SazGoqx8L._SS500_.jpg`
   },
   {
-    name: 'X 100PRE ',
-    artist: 'Bad Bunny',
-    description: `X100PRE thrives as Bad Bunny's debut body of work, served with a modern sensibility of what Latin Urban can overcome and how influential it can be. X100PRE presents itself as a compilation of personal desires that are often nostalgic, celebratory, youthful and even introspective without losing relation to its listeners own experiences. Because of this, X100PRE has become a monumental masterpiece to the current Latino generations, capturing their very essence through words, sounds and colors.
+    name: 'The Velvet Underground & Nico ',
+    artist: 'The Velvet Underground',
+    description: `Seminal debut album featuring "Heroin" & "I'm Waiting For The Man". Remastered edition.
 `,
     tracks: [
-      ` NI BIEN NI MAL`,
-      `200 MPHFeaturing`,
-      `¿Quién Tú Eres?`,
-      `Caro`,
-      `Tenemos Que Hablar`,
-      `Otra Noche en Miami`,
-      `Ser Bichote`,
-      `Si Estuviésemos Juntos`,
-      `Solo de Mí`,
-      `Cuando Perriabas`,
-      `La RomanaFeaturing`,
-      `Como Antes`,
-      `RLNDT`,
-      `Estamos Bien`,
-      `MÍAFeaturing `
+      'Sunday Morning',
+      "I'm Waiting for the Man",
+      'Femme Fatale',
+      'Venus in Furs',
+      'Run Run Run',
+      "All Tomorrow's Parties",
+      'Heroin',
+      'There She Goes Again',
+      "I'll Be Your Mirror",
+      "The Black Angel's Death Song",
+      'European Son'
     ],
-    price: 24980,
+    price: 1825000,
     type: `Record`,
-    genre: 'Reggaeton',
-    albumTitle: `X 100PRE `,
-    year: 2018,
+    genre: 'Rock',
+    albumTitle: `The Velvet Underground & Nico`,
+    year: 1996,
     quantity: 10,
-    image: `https://media.pitchfork.com/photos/5c2cdf59673bd655963c817c/1:1/w_600/X%20100PRE_Bad%20Bunny.jpg`
+    image: `https://images-na.ssl-images-amazon.com/images/I/71H2%2BSj3wmL._SX425_.jpg`
   },
   {
     name: 'Victrola Vintage 3-Speed Bluetooth Portable',
@@ -446,48 +416,48 @@ const orders = [
 ]
 
 const carts = [
-  {orderId: 1, productId: 2, qty: 2, price: 1000},
+  {orderId: 1, productId: 2, qty: 2, price: 24990},
 
   {
     orderId: 2,
     productId: 1,
     qty: 3,
-    price: 2050
+    price: 24990
   },
 
   {
     orderId: 2,
     productId: 3,
     qty: 1,
-    price: 3099
+    price: 19990
   },
 
   {
     orderId: 3,
     productId: 1,
     qty: 2,
-    price: 1000
+    price: 24990
   },
 
   {
     orderId: 4,
     productId: 1,
     qty: 1,
-    price: 2050
+    price: 24990
   },
 
   {
     orderId: 4,
     productId: 15,
     qty: 1,
-    price: 15000
+    price: 199990
   },
 
   {
     orderId: 5,
     productId: 15,
     qty: 1,
-    price: 15000
+    price: 199990
   }
 ]
 

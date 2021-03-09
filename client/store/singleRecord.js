@@ -31,8 +31,11 @@ export const editedSingleRecord = record => ({
 export const fetchSingleRecord = id => async dispatch => {
   try {
     const {data} = await axios.get(`/api/products/${id}`)
+    console.log(data.type)
     if (data.type === 'Record_Player') {
       history.push(`/recordplayer/${id}`)
+    } else {
+      history.push(`/record/${id}`)
     }
     dispatch(getSingleRecord(data))
   } catch (err) {

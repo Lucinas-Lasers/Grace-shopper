@@ -80,49 +80,50 @@ class SingleRecord extends React.Component {
   render() {
     const loading = this.props.singleRecord.loading
     let record = this.props.singleRecord.record
-    return !loading ? (
-      <div>
-        <div key={record.id} className="albumList">
-          <img src={record.image} />
-          <div className="album">
-            <h1>{record.name}</h1>
-            <h1>{record.artist}</h1>
-            <p>{record.description}</p>
-            <p>{record.price}</p>
-            {record.tracks.map((track, ind) => {
-              return <div key={ind}> {track}</div>
-            })}
-            <ComponentAddToCart
-              record={record}
-              cart={this.props.cart}
-              getCartInfo={this.props.getCartInfo}
-            />
+    if (!loading) {
+      return (
+        <div>
+          <div key={record.id} className="albumList">
+            <img src={record.image} />
+            <div className="album">
+              <h1>{record.name}</h1>
+              <h1>{record.artist}</h1>
+              <p>{record.description}</p>
+              <p>{record.price}</p>
+              {record.tracks.map((track, ind) => {
+                return <div key={ind}> {track}</div>
+              })}
+              <ComponentAddToCart
+                record={record}
+                cart={this.props.cart}
+                getCartInfo={this.props.getCartInfo}
+                isLoggedIn={!!this.props.user.id}
+              />
 
-            {this.props.user.admin ? (
-              !this.state.edit ? (
-                <RecordForm
-                  state={this.state}
-                  editButton={this.editButton}
-                  handleSubmit={this.handleSubmit}
-                  handleChange={this.handleChange}
-                />
-              ) : (
-                <div>
-                  {' '}
-                  <button id="cancel" type="button" onClick={this.editButton}>
-                    Edit
-                  </button>
-                </div>
-              )
-            ) : (
-              <div />
-            )}
+              {this.props.user.admin ? (
+                !this.state.edit ? (
+                  <RecordForm
+                    state={this.state}
+                    editButton={this.editButton}
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                  />
+                ) : (
+                  <div>
+                    {' '}
+                    <button id="cancel" type="button" onClick={this.editButton}>
+                      Edit
+                    </button>
+                  </div>
+                )
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
-    ) : (
-      <div>Loading...</div>
-    )
+      )
+    } else {
+      return <div>Loading...</div>
+    }
   }
 }
 

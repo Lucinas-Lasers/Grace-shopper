@@ -25,11 +25,30 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    const users = await User.findAll({
+    const user = await User.findAll({
       where: {id: req.params.userId},
       attributes: ['id', 'firstName', 'middleName', 'lastName', 'email']
     })
-    res.json(users)
+    res.json(user)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//only user with admin === true can modify user info
+router.put('/:userId', async (req, res, next) => {
+  try {
+    if (!req.user || req.user.admin === false) {
+      res.status(404).send(`you are not allowed to modify user information`)
+    } else {
+      const user = await User.findAll({
+        where: {id: req.params.userId},
+        attributes: ['id', 'firstName', 'middleName', 'lastName', 'email']
+      })
+
+      await user.update(req.body)
+      res.status(204).json(user)
+    }
   } catch (err) {
     next(err)
   }
