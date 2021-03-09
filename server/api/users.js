@@ -65,7 +65,7 @@ router.get('/:userId/orders', async (req, res, next) => {
       attributes: ['id', 'firstName', 'middleName', 'lastName', 'email']
     })
 
-    res.json(userOrder)
+    res.status(200).json(userOrder)
   } catch (err) {
     next(err)
   }

@@ -272,3 +272,27 @@ SVG Icons - svgicons.sparkk.fr
   flex-direction: column;
   align-items: center;
 }
+
+/* Admin - UserList */
+
+#user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 30px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid #222222;
+}
+
+th,
+td {
+  padding: 5px;
+}

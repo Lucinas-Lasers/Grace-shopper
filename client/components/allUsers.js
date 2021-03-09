@@ -12,15 +12,26 @@ class AllUsers extends React.Component {
     return this.props.user &&
       this.props.user.admin &&
       this.props.allUsers[0] ? (
-      <div className="albumList">
-        {this.props.allUsers.map(element => {
-          return (
-            <div key={element.id} className="album">
-              <h1>{element.firstName}</h1>
-              <h1>{element.lastName}</h1>
-            </div>
-          )
-        })}
+      <div id="user-info">
+        <h3>Laser Records Users</h3>
+        <table>
+          <tbody>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </tr>
+            {this.props.allUsers.map((element, idx) => {
+              return (
+                <tr key={idx}>
+                  <td>{element.firstName}</td>
+                  <td>{element.lastName}</td>
+                  <td>{element.email}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
       </div>
     ) : (
       <div>ERROR! Unauthorized Access. Go back to Grace Hopper Mac</div>
