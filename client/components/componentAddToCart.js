@@ -84,7 +84,7 @@ export const addToCart = props => {
 }
 
 const mapState = state => ({
-  cart: state.cartReducer
+  cart: state.cartReducer.cart[0]
 })
 
 const mapDispatch = dispatch => {

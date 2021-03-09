@@ -13,7 +13,7 @@ const BUY_CART_ITEM = 'BUY_CART_ITEM'
  * INITIAL STATE
  */
 
-const initialState = []
+const initialState = {loading: true, cart: []}
 
 /**
  * ACTION CREATORS
@@ -86,14 +86,15 @@ export const buyCartItem = id => {
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CART_INFO:
-      return action.products[0]
+      return {...state, loading: false, cart: action.products}
     case ADD_TO_CART:
-      return {...state, products: [...state.products, action.item]}
+      console.log(state.cart)
+      return {...state, cart: [...state.cart[0].products, action.item]}
     case UPDATE_TO_CART:
       return {
         ...state,
-        products: [
-          state.products.map(product => {
+        cart: [
+          state.cart[0].products.map(product => {
             if (product.id === action.item.id) {
               return action.item
             }

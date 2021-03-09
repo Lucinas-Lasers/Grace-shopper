@@ -6,7 +6,7 @@ import {fetchCartInfo, updateToCart, buyCartItem} from '../store/cart'
 class Cart extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {orderId: '', products: []}
+    this.state = {orderId: '', products: [], localStorage: {}}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.localStorageChange = this.localStorageChange.bind(this)
@@ -18,11 +18,11 @@ class Cart extends React.Component {
         orderId: this.props.cart.id,
         products: this.props.cart.products
       })
-    } else if (!this.props.user.id) {
+    } else if (!this.props.user.id && window.localStorage.getItem('cart')) {
       let localStorage = JSON.parse(window.localStorage.getItem('cart'))
       const localProducts = Object.entries(localStorage)
       this.props.getProducts(localProducts)
-      this.setState(localStorage)
+      this.setState({localStorage})
       // localProducts.forEach((product) => this.props.getProducts(product[0]))
     }
   }
@@ -79,7 +79,7 @@ class Cart extends React.Component {
     let localStorage = JSON.parse(window.localStorage.getItem('cart'))
     localStorage[id].qty = newNumber
     window.localStorage.setItem('cart', JSON.stringify(localStorage))
-    this.setState(localStorage)
+    this.setState({localStorage})
   }
 
   render() {
@@ -87,12 +87,14 @@ class Cart extends React.Component {
     // console.log('this.props', this.props)
     // console.log('products', this.props.cart.products)
     // console.log('help', this.props.cart.length)
-    if (this.props.cart.userId) {
+    if (this.props.user && !this.props.loading) {
       // if user is logged in
-      if (this.props.cart.products.length) {
+      // if (this.props.cart.products) {
+      if (this.props.cart.products && this.props.cart.products.length) {
         // if user has items in cart
         return (
           <div className="cartList">
+            {console.log('1')}
             {this.state.products.map((item, indx) => {
               return (
                 <div className="cartItem" key="1">
@@ -144,6 +146,7 @@ class Cart extends React.Component {
 
       return (
         <div className="cartList">
+          {console.log('2')}
           {productsStorage.map(product => {
             let item = product.data
             return (
@@ -152,9 +155,11 @@ class Cart extends React.Component {
                 <img src={item.image} />
                 <p>
                   Price: {`$${(item.price / 1000).toFixed(2)}`}{' '}
-                  {`($${(item.price * this.state[item.id].qty / 1000).toFixed(
-                    2
-                  )})`}
+                  {`($${(
+                    item.price *
+                    this.state.localStorage[item.id].qty /
+                    1000
+                  ).toFixed(2)})`}
                 </p>
                 <div>
                   <label htmlFor={item.name}>
@@ -163,7 +168,7 @@ class Cart extends React.Component {
                   <input
                     name={item.name}
                     type="number"
-                    value={this.state[item.id].qty}
+                    value={this.state.localStorage[item.id].qty}
                     min="1"
                     max={`${item.quantity}`}
                     onChange={e => {
@@ -178,7 +183,7 @@ class Cart extends React.Component {
             productsStorage.reduce((accumulator, currentElem) => {
               return (
                 accumulator +
-                JSON.parse(this.state[currentElem.data.id].qty) *
+                JSON.parse(this.state.localStorage[currentElem.data.id].qty) *
                   JSON.parse(currentElem.data.price)
               )
             }, 0) / 1000
@@ -193,7 +198,8 @@ class Cart extends React.Component {
 }
 
 const mapState = state => ({
-  cart: state.cartReducer,
+  cart: state.cartReducer.cart[0],
+  loading: state.cartReducer.loading,
   user: state.user,
   guestProducts: state.guestReducer.cart
 })
