@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchProduct, resetLoading} from '../store/guestCart'
+import {fetchProduct, resetLoading, deleteProduct} from '../store/guestCart'
 import {
   fetchCartInfo,
   updateToCart,
@@ -18,6 +18,7 @@ class Cart extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.localStorageChange = this.localStorageChange.bind(this)
     this.remove = this.remove.bind(this)
+    this.handleGuestSubmit = this.handleGuestSubmit.bind(this)
   }
   async componentDidMount() {
     if (this.props.user.id) {
@@ -67,10 +68,27 @@ class Cart extends React.Component {
     }
   }
 
+  //guest submit
+  handleGuestSubmit(e) {
+    e.preventDefault()
+    const id = e.target.name
+    this.props.deleteProduct(id)
+    const storage = JSON.parse(window.localStorage.getItem('cart'))
+    delete storage[id]
+    this.setState({localStorage: storage})
+    window.localStorage.setItem('cart', JSON.stringify(storage))
+  }
+  //guest storage
+  localStorageChange(e, id) {
+    let newNumber = e.target.value
+    let localStorage = JSON.parse(window.localStorage.getItem('cart'))
+    localStorage[id].qty = newNumber
+    window.localStorage.setItem('cart', JSON.stringify(localStorage))
+    this.setState({localStorage})
+  }
+
   async handleSubmit(e) {
     e.preventDefault()
-    console.log('submitted')
-
     const checkArray = []
     this.state.products.forEach(product => {
       if (product['product-order'].qty > product.quantity) {
@@ -98,14 +116,6 @@ class Cart extends React.Component {
     }
   }
 
-  localStorageChange(e, id) {
-    let newNumber = e.target.value
-    let localStorage = JSON.parse(window.localStorage.getItem('cart'))
-    localStorage[id].qty = newNumber
-    window.localStorage.setItem('cart', JSON.stringify(localStorage))
-    this.setState({localStorage})
-  }
-
   componentWillUnmount() {
     this.props.guestLoad()
     this.props.userLoad()
@@ -124,7 +134,6 @@ class Cart extends React.Component {
         // if user has items in cart
         return (
           <div className="cartList">
-            {console.log('1')}
             {this.props.cart.products.map((item, indx) => {
               return (
                 <div className="cartItem" key={item.id}>
@@ -178,20 +187,23 @@ class Cart extends React.Component {
         // user doesn't have items
         return <div> No items in Cart</div>
       }
-    } else if (window.localStorage.getItem('cart') && !this.props.user.id) {
+    } else if (
+      !Object.keys(JSON.parse(window.localStorage.getItem('cart'))).length ==
+        0 &&
+      !this.props.user.id
+    ) {
       if (!this.props.guestLoading) {
         // the guest user isn't logged in
         let productsStorage = this.props.guestProducts
-        console.log('help', this.state.localStorage)
+
         return (
           <div className="cartList">
             {console.log('2')}
             {productsStorage.map(product => {
               let item = product.data
-              console.log('ITEM', item)
-              console.log('id', item.id)
+              console.log(item.id, 'id')
               return (
-                <div className="cartItem" key="1">
+                <div className="cartItem" key={item.id}>
                   <div>{item.name}</div>
                   <img src={item.image} />
                   <p>
@@ -209,7 +221,7 @@ class Cart extends React.Component {
                     <input
                       name={item.name}
                       type="number"
-                      value={this.state.localStorage[item.id].qty}
+                      value={this.state.localStorage[item.id].qty} // parse qty
                       min="1"
                       max={`${item.quantity}`}
                       onChange={e => {
@@ -217,6 +229,14 @@ class Cart extends React.Component {
                       }}
                     />
                   </div>
+                  <button
+                    id="remove"
+                    type="button"
+                    name={[item.id]}
+                    onClick={e => this.handleGuestSubmit(e)}
+                  >
+                    Remove Item
+                  </button>
                 </div>
               )
             })}
@@ -251,6 +271,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => {
   return {
+    deleteProduct: id => dispatch(deleteProduct(id)),
     cartInfo: id => dispatch(fetchCartInfo(id)),
     guestLoad: () => dispatch(resetLoading()),
     userLoad: () => dispatch(userCartLoading()),
