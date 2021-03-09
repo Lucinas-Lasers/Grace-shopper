@@ -1,12 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchProduct} from '../store/guestCart'
+import {fetchProduct, resetLoading} from '../store/guestCart'
 import {
   fetchCartInfo,
   updateToCart,
   buyCartItem,
   orderFulfilled,
-  removeItem
+  removeItem,
+  userCartLoading
 } from '../store/cart'
 
 class Cart extends React.Component {
@@ -18,14 +19,15 @@ class Cart extends React.Component {
     this.localStorageChange = this.localStorageChange.bind(this)
     this.remove = this.remove.bind(this)
   }
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.user.id) {
-      this.props.getCartInfo(this.props.user.id)
+      await this.props.getCartInfo(this.props.user.id)
       this.setState({
         orderId: this.props.cart.id,
         products: this.props.cart.products
       })
     } else if (!this.props.user.id && window.localStorage.getItem('cart')) {
+      console.log('Componenet guest')
       let localStorage = JSON.parse(window.localStorage.getItem('cart'))
       const localProducts = Object.entries(localStorage)
       this.props.getProducts(localProducts)
@@ -45,6 +47,7 @@ class Cart extends React.Component {
   }
 
   async remove(e) {
+    e.preventDefault()
     await this.props.removeItem({
       orderId: this.state.orderId,
       productId: e.target.name
@@ -53,13 +56,15 @@ class Cart extends React.Component {
   }
 
   async handleChange(e, indx) {
-    let item = this.state.products
-    item[indx]['product-order'].qty = e.target.value
-    item[indx]['product-order'].price =
-      item[indx]['product-order'].qty * item[indx].price
-    await this.props.updateToCart(item[indx]['product-order'])
-    this.setState({products: item})
-    await this.props.getCartInfo(this.props.user.id)
+    e.preventDefault()
+    if (this.props.user) {
+      let item = this.state.products
+      item[indx]['product-order'].qty = e.target.value
+      item[indx]['product-order'].price =
+        item[indx]['product-order'].qty * item[indx].price
+      await this.props.updateToCart(item[indx]['product-order'])
+      await this.props.getCartInfo(this.props.user.id)
+    }
   }
 
   async handleSubmit(e) {
@@ -101,12 +106,18 @@ class Cart extends React.Component {
     this.setState({localStorage})
   }
 
+  componentWillUnmount() {
+    this.props.guestLoad()
+    this.props.userLoad()
+  }
+
   render() {
     // const cart = this.props.cartProducts
     // console.log('this.props', this.props)
     // console.log('products', this.props.cart.products)
     // console.log('help', this.props.cart.length)
     if (this.props.user && !this.props.loading) {
+      console.log(this.props.user, this.props.loading)
       // if user is logged in
       // if (this.props.cart.products) {
       if (this.props.cart.products && this.props.cart.products.length) {
@@ -167,58 +178,62 @@ class Cart extends React.Component {
         // user doesn't have items
         return <div> No items in Cart</div>
       }
-    } else if (window.localStorage.getItem('cart')) {
-      // the guest user isn't logged in
-      let productsStorage = this.props.guestProducts
-      console.log('help', this.state.localStorage)
-      return (
-        <div className="cartList">
-          {console.log('2')}
-          {productsStorage.map(product => {
-            let item = product.data
-            console.log('ITEM', item)
-            console.log('id', item.id)
-            return (
-              <div className="cartItem" key="1">
-                <div>{item.name}</div>
-                <img src={item.image} />
-                <p>
-                  Price: {`$${(item.price / 1000).toFixed(2)}`}{' '}
-                  {`($${(
-                    item.price *
-                    this.state.localStorage[item.id].qty /
-                    1000
-                  ).toFixed(2)})`}
-                </p>
-                <div>
-                  <label htmlFor={item.name}>
-                    <small>Quantity</small>
-                  </label>
-                  <input
-                    name={item.name}
-                    type="number"
-                    value={this.state.localStorage[item.id].qty}
-                    min="1"
-                    max={`${item.quantity}`}
-                    onChange={e => {
-                      this.localStorageChange(e, item.id)
-                    }}
-                  />
-                </div>
-              </div>
-            )
-          })}
-          {`Price: ${(
-            productsStorage.reduce((accumulator, currentElem) => {
+    } else if (window.localStorage.getItem('cart') && !this.props.user.id) {
+      if (!this.props.guestLoading) {
+        // the guest user isn't logged in
+        let productsStorage = this.props.guestProducts
+        console.log('help', this.state.localStorage)
+        return (
+          <div className="cartList">
+            {console.log('2')}
+            {productsStorage.map(product => {
+              let item = product.data
+              console.log('ITEM', item)
+              console.log('id', item.id)
               return (
-                accumulator +
-                JSON.parse(this.state.localStorage[currentElem.data.id].qty) *
-                  JSON.parse(currentElem.data.price)
+                <div className="cartItem" key="1">
+                  <div>{item.name}</div>
+                  <img src={item.image} />
+                  <p>
+                    Price: {`$${(item.price / 1000).toFixed(2)}`}{' '}
+                    {`($${(
+                      item.price *
+                      this.state.localStorage[item.id].qty /
+                      1000
+                    ).toFixed(2)})`}
+                  </p>
+                  <div>
+                    <label htmlFor={item.name}>
+                      <small>Quantity</small>
+                    </label>
+                    <input
+                      name={item.name}
+                      type="number"
+                      value={this.state.localStorage[item.id].qty}
+                      min="1"
+                      max={`${item.quantity}`}
+                      onChange={e => {
+                        this.localStorageChange(e, item.id)
+                      }}
+                    />
+                  </div>
+                </div>
               )
-            }, 0) / 1000
-          ).toFixed(2)}`}
-        </div>
-      )
+            })}
+            {`Price: ${(
+              productsStorage.reduce((accumulator, currentElem) => {
+                return (
+                  accumulator +
+                  JSON.parse(this.state.localStorage[currentElem.data.id].qty) *
+                    JSON.parse(currentElem.data.price)
+                )
+              }, 0) / 1000
+            ).toFixed(2)}`}
+          </div>
+        )
+      } else {
+        return <div>Loading...</div>
+      }
     } else {
       // if guest user cart is empty
       return <div>No cart, buster.</div>
@@ -230,15 +245,16 @@ const mapState = state => ({
   cart: state.cartReducer.cart[0],
   loading: state.cartReducer.loading,
   user: state.user,
-  guestProducts: state.guestReducer.cart
+  guestProducts: state.guestReducer.cart,
+  guestLoading: state.guestReducer.loading
 })
 
 const mapDispatch = dispatch => {
   return {
     cartInfo: id => dispatch(fetchCartInfo(id)),
-
+    guestLoad: () => dispatch(resetLoading()),
+    userLoad: () => dispatch(userCartLoading()),
     getCartInfo: id => dispatch(fetchCartInfo(id)),
-
     getProducts: id => dispatch(fetchProduct(id)),
     updateToCart: id => dispatch(updateToCart(id)),
     buyCartItem: id => dispatch(buyCartItem(id)),
