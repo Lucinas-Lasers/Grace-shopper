@@ -1,7 +1,7 @@
 const User = require('./user')
 const Product = require('./product')
 const Promotion = require('./promotion')
-const Wishlist = require('./wishlist')
+// const Wishlist = require('./wishlist')
 const Order = require('./order')
 const ProductOrder = require('./product-order')
 
@@ -56,7 +56,7 @@ Promotion.belongsToMany(Order, {through: 'order-promotion'})
 module.exports = {
   User,
   Product,
-  Wishlist,
+  // Wishlist,
   Order,
   ProductOrder,
   Promotion
