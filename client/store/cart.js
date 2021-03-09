@@ -9,6 +9,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const UPDATE_TO_CART = 'UPDATE_TO_CART'
 const BUY_CART_ITEM = 'BUY_CART_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
+const CART_LOADING = 'CART_LOADING'
 /**
  * INITIAL STATE
  */
@@ -37,6 +38,10 @@ export const boughtCartItem = item => ({
 export const removedItem = item => ({
   type: REMOVE_ITEM,
   item
+})
+
+export const userCartLoading = () => ({
+  type: CART_LOADING
 })
 
 /**
@@ -111,6 +116,8 @@ export const removeItem = id => {
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
+    case CART_LOADING:
+      return {...state, loading: true}
     case GET_CART_INFO:
       return {...state, loading: false, cart: action.products}
     case ADD_TO_CART:
