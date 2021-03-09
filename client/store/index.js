@@ -12,6 +12,7 @@ import allRecordPlayerReducer from './allRecordPlayers'
 import singleRecordPlayerReducer from './singleRecordPlayer'
 import allUsersReducer from './allUsers'
 import guestReducer from './guestCart'
+import confirmationReducer from './confirmationReducer'
 
 const reducer = combineReducers({
   user,
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   allRecordPlayerReducer,
   singleRecordPlayerReducer,
   allUsersReducer,
-  guestReducer
+  guestReducer,
+  confirmationReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

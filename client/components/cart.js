@@ -9,6 +9,8 @@ import {
   removeItem
 } from '../store/cart'
 
+import {setConfirmedProducts} from '../store/confirmationReducer'
+
 class Cart extends React.Component {
   constructor(props) {
     super(props)
@@ -87,6 +89,8 @@ class Cart extends React.Component {
         status: 'fulfilled',
         userId: this.props.user.id
       })
+      console.log('inside', this.state.products)
+      this.setConfirmedProducts(this.state.products)
       this.setState({products: []})
     } else {
       return <div>Not enough of Item</div>
@@ -235,8 +239,9 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => {
   return {
-    cartInfo: id => dispatch(fetchCartInfo(id)),
+    setConfirmedProducts: array => dispatch(setConfirmedProducts(array)),
 
+    cartInfo: id => dispatch(fetchCartInfo(id)),
     getCartInfo: id => dispatch(fetchCartInfo(id)),
 
     getProducts: id => dispatch(fetchProduct(id)),

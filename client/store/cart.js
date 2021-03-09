@@ -1,6 +1,16 @@
 import axios from 'axios'
 import history from '../history'
 
+// state.cart[0].products = state.cart[0].products.filter((product) => {
+//         if (product.id !== action.item.id) {
+//           return true
+//         } else return false
+//       })
+
+//       return {
+//         ...state,
+//         cart: state.cart,
+
 /**
  * ACTION TYPES
  */
@@ -127,14 +137,13 @@ export default function cartReducer(state = initialState, action) {
         ]
       }
     case BUY_CART_ITEM:
+      console.log(state.cart[0])
       return {
         ...state,
         cart: [
-          state.cart[0].products.filter(product => {
-            if (product.id !== action.item.id) {
-              return product
-            }
-          })
+          state.cart[0].products.filter(
+            product => product.id !== action.item.id
+          )
         ]
       }
     case REMOVE_ITEM:
