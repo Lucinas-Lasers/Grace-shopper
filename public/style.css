@@ -296,3 +296,32 @@ th,
 td {
   padding: 5px;
 }
+
+/* confirmation-page */
+.confirmationContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 50vw;
+}
+
+.confirmationItem {
+  border: solid;
+  border-color: black;
+  border-width: 1px 1px;
+  margin-top: 5px;
+  display: flex;
+  width: 100%;
+}
+
+.confirmationRightContainer {
+  margin-left: 20px;
+}
+
+.confirmationItem img {
+  border: solid;
+  border-color: black;
+  border-width: 0px 1px 0px 0px;
+  width: 250px;
+  height: 250px;
+}

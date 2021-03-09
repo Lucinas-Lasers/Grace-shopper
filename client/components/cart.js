@@ -10,6 +10,8 @@ import {
   userCartLoading
 } from '../store/cart'
 
+import {setConfirmedProducts} from '../store/confirmationReducer'
+
 class Cart extends React.Component {
   constructor(props) {
     super(props)
@@ -91,13 +93,13 @@ class Cart extends React.Component {
     e.preventDefault()
     const checkArray = []
     this.state.products.forEach(product => {
-      if (product['product-order'].qty > product.quantity) {
+      if (product['product-order'].qty <= product.quantity) {
         return checkArray.push(product)
       }
     })
     console.log('checkarray', this.state.products)
 
-    if (!checkArray.length) {
+    if (checkArray.length && checkArray.length === this.state.products.length) {
       await this.state.products.forEach(element => {
         this.props.buyCartItem({
           id: element.id,
@@ -110,6 +112,8 @@ class Cart extends React.Component {
         status: 'fulfilled',
         userId: this.props.user.id
       })
+
+      this.props.setConfirmedProducts(checkArray)
       this.setState({products: []})
     } else {
       return <div>Not enough of Item</div>
@@ -272,9 +276,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => {
   return {
     deleteProduct: id => dispatch(deleteProduct(id)),
-    cartInfo: id => dispatch(fetchCartInfo(id)),
     guestLoad: () => dispatch(resetLoading()),
     userLoad: () => dispatch(userCartLoading()),
+    setConfirmedProducts: array => dispatch(setConfirmedProducts(array)),
     getCartInfo: id => dispatch(fetchCartInfo(id)),
     getProducts: id => dispatch(fetchProduct(id)),
     updateToCart: id => dispatch(updateToCart(id)),

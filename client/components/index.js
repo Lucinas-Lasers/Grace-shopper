@@ -20,3 +20,4 @@ export {singleRecordPlayer} from './singleRecordPlayer'
 
 export {allProducts} from './allProducts'
 export {allUsers} from './allUsers'
+export {confirmationPage} from './confirmationPage'

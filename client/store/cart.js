@@ -134,15 +134,17 @@ export default function cartReducer(state = initialState, action) {
         ]
       }
     case BUY_CART_ITEM:
+      console.log('Before cart', state.cart)
+      state.cart[0].products = state.cart[0].products.filter(product => {
+        console.log('product:', product, action.item)
+
+        return product.id !== action.item.id
+      })
+      console.log('After cart', state.cart)
+
       return {
         ...state,
-        cart: [
-          state.cart[0].products.filter(product => {
-            if (product.id !== action.item.id) {
-              return product
-            }
-          })
-        ]
+        cart: state.cart
       }
     case REMOVE_ITEM:
       return {
