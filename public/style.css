@@ -282,6 +282,10 @@ SVG Icons - svgicons.sparkk.fr
 }
 
 .confirmationItem {
+  border: solid;
+  border-color: black;
+  border-width: 1px 1px;
+  margin-top: 5px;
   display: flex;
   width: 100%;
 }
@@ -291,6 +295,9 @@ SVG Icons - svgicons.sparkk.fr
 }
 
 .confirmationItem img {
-  width: 300px;
-  height: 300px;
+  border: solid;
+  border-color: black;
+  border-width: 0px 1px 0px 0px;
+  width: 250px;
+  height: 250px;
 }

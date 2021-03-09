@@ -27,7 +27,8 @@ export const confirmationPageRender = props => {
         {props.confirmationInformation.confirmCart.reduce(
           (accumulator, currentVal) => {
             console.log(currentVal)
-            return accumulator + parseFloat(currentVal.price)
+            currentVal = parseFloat(currentVal.price * 1000)
+            return (accumulator + currentVal) / 1000
           },
           0
         )}
