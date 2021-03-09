@@ -17,4 +17,6 @@ export {singleRecord} from './singleRecord'
 
 export {allRecordPlayers} from './allRecordPlayers'
 export {singleRecordPlayer} from './singleRecordPlayer'
+
+export {allProducts} from './allProducts'
 export {allUsers} from './allUsers'
