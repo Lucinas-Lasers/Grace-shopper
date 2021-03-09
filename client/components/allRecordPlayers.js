@@ -5,11 +5,20 @@ import {
   fetchAllRecordPlayers,
   deleteSingleRecordPlayer
 } from '../store/allRecordPlayers'
+import {fetchCartInfo} from '../store/cart'
 import EditProduct from './editProduct'
 
 class AllRecordPlayers extends React.Component {
   componentDidMount() {
     this.props.fetchAllRecordPlayers()
+    if (this.props.user.id) {
+      this.props.getCartInfo(this.props.user.id)
+    }
+  }
+  componentDidUpdate(prevprops) {
+    if (this.props.user.id && this.props.user.id !== prevprops.user.id) {
+      this.props.getCartInfo(this.props.user.id)
+    }
   }
 
   render() {
@@ -30,9 +39,7 @@ class AllRecordPlayers extends React.Component {
                   product={element.id}
                   type={element.type}
                 />
-              ) : (
-                <div />
-              )}
+              ) : null}
             </div>
           )
         })}
@@ -52,7 +59,8 @@ const mapDispatch = dispatch => ({
   fetchAllRecordPlayers: () => {
     dispatch(fetchAllRecordPlayers())
   },
-  deleteSingleRecordPlayer: id => dispatch(deleteSingleRecordPlayer(id))
+  deleteSingleRecordPlayer: id => dispatch(deleteSingleRecordPlayer(id)),
+  getCartInfo: id => dispatch(fetchCartInfo(id))
 })
 
 export const allRecordPlayers = connect(mapState, mapDispatch)(AllRecordPlayers)

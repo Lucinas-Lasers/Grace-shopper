@@ -39,13 +39,12 @@ class Routes extends Component {
         <Route path="/recordplayer/:id" component={singleRecordPlayer} />
         <Route path="/users" component={allUsers} />
         <Route path="/home" component={UserHome} />
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-          </Switch>
+        {isLoggedIn && this.props.user.admin ? (
+          <Switch>{<Route path="/users" component={allUsers} />}</Switch>
+        ) : (
+          <Route component={Login} />
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
       </Switch>
     )
   }
@@ -59,7 +58,7 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    cart: state.cartReducer,
+    cart: state.cartReducer.cart[0],
     user: state.user
   }
 }
