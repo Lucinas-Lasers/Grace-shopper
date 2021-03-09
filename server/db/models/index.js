@@ -21,11 +21,19 @@ Order.belongsToMany(Product, {
 Product.belongsToMany(Order, {
   through: ProductOrder
 })
-// User.hasMany(ProductOrder)
-// ProductOrder.belongsTo(User)
 
 Order.hasMany(ProductOrder)
 ProductOrder.belongsTo(Order)
+
+//"super association"
+
+Product.hasMany(ProductOrder)
+ProductOrder.belongsTo(Product)
+
+//
+
+// User.hasMany(ProductOrder)
+// ProductOrder.belongsTo(User)
 
 Order.belongsTo(User)
 User.hasMany(Order)
