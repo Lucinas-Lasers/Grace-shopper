@@ -1,7 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProduct} from '../store/guestCart'
-import {fetchCartInfo, updateToCart, buyCartItem} from '../store/cart'
+import {
+  fetchCartInfo,
+  updateToCart,
+  buyCartItem,
+  orderFulfilled,
+  removeItem
+} from '../store/cart'
 
 class Cart extends React.Component {
   constructor(props) {
@@ -10,6 +16,7 @@ class Cart extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.localStorageChange = this.localStorageChange.bind(this)
+    this.remove = this.remove.bind(this)
   }
   componentDidMount() {
     if (this.props.user.id) {
@@ -37,6 +44,14 @@ class Cart extends React.Component {
     }
   }
 
+  async remove(e) {
+    await this.props.removeItem({
+      orderId: this.state.orderId,
+      productId: e.target.name
+    })
+    await this.props.getCartInfo(this.props.user.id)
+  }
+
   async handleChange(e, indx) {
     let item = this.state.products
     item[indx]['product-order'].qty = e.target.value
@@ -51,27 +66,31 @@ class Cart extends React.Component {
     e.preventDefault()
     console.log('submitted')
 
-    //we need to check to see if each individual item is there, and if the quantity is good//turn order to pending to fufilled, delete items from inventiory and send back a new cart
-    //redirect person to page with order confirmation page
-    //
-    // check inventory function, if this function returns true, then we go to another page, else we
     const checkArray = []
     this.state.products.forEach(product => {
       if (product['product-order'].qty > product.quantity) {
-        return checkArray.push(false)
+        return checkArray.push(product)
       }
     })
-    console.log('checkarray', checkArray)
-    console.log(this.state.products[0])
-    // if (!checkArray.length) {
-    //   await Promise.all(
-    //     this.state.products.forEach(async (element) => {
-    //       console.log(element)
-    //       // await this.props.buyToCart(element)
-    //     })
-    //   )
-    // }
-    this.setState({products: []})
+    console.log('checkarray', this.state.products)
+
+    if (!checkArray.length) {
+      await this.state.products.forEach(element => {
+        this.props.buyCartItem({
+          id: element.id,
+          quantity: element['product-order'].qty
+        })
+      })
+
+      await this.props.orderFulfilled({
+        orderId: this.state.orderId,
+        status: 'fulfilled',
+        userId: this.props.user.id
+      })
+      this.setState({products: []})
+    } else {
+      return <div>Not enough of Item</div>
+    }
   }
 
   localStorageChange(e, id) {
@@ -95,9 +114,9 @@ class Cart extends React.Component {
         return (
           <div className="cartList">
             {console.log('1')}
-            {this.state.products.map((item, indx) => {
+            {this.props.cart.products.map((item, indx) => {
               return (
-                <div className="cartItem" key="1">
+                <div className="cartItem" key={item.id}>
                   <div>{item.name}</div>
                   <img src={item.image} />
                   <div>
@@ -107,7 +126,7 @@ class Cart extends React.Component {
                     <input
                       name={item.name}
                       type="number"
-                      date="20"
+                      min="0"
                       value={item['product-order'].qty}
                       onChange={e => this.handleChange(e, indx)}
                     />
@@ -116,13 +135,21 @@ class Cart extends React.Component {
                   <div>
                     Total Price:{' '}
                     {(item['product-order'].qty * item.price / 1000).toFixed(2)}
+                    <button
+                      id="remove"
+                      type="button"
+                      name={item['product-order'].productId}
+                      onClick={e => this.remove(e)}
+                    >
+                      Remove Item
+                    </button>
                   </div>
                 </div>
               )
             })}
             <div>
               Purchase Total:{' '}
-              {this.state.products
+              {this.props.cart.products
                 .reduce((accumulator, current) => {
                   return (
                     accumulator +
@@ -143,12 +170,14 @@ class Cart extends React.Component {
     } else if (window.localStorage.getItem('cart')) {
       // the guest user isn't logged in
       let productsStorage = this.props.guestProducts
-
+      console.log('help', this.state.localStorage)
       return (
         <div className="cartList">
           {console.log('2')}
           {productsStorage.map(product => {
             let item = product.data
+            console.log('ITEM', item)
+            console.log('id', item.id)
             return (
               <div className="cartItem" key="1">
                 <div>{item.name}</div>
@@ -212,7 +241,9 @@ const mapDispatch = dispatch => {
 
     getProducts: id => dispatch(fetchProduct(id)),
     updateToCart: id => dispatch(updateToCart(id)),
-    buyCartItem: id => dispatch(buyCartItem(id))
+    buyCartItem: id => dispatch(buyCartItem(id)),
+    orderFulfilled: id => dispatch(orderFulfilled(id)),
+    removeItem: id => dispatch(removeItem(id))
   }
 }
 

@@ -7,6 +7,8 @@ import {
   editSingleRecordPlayer
 } from '../store/singleRecordPlayer'
 import RecordPlayerForm from './recordPlayerForm'
+import {ComponentAddToCart} from './componentAddToCart'
+import {fetchCartInfo} from '../store/cart'
 
 class SingleRecordPlayer extends React.Component {
   constructor() {
@@ -15,7 +17,7 @@ class SingleRecordPlayer extends React.Component {
       name: '',
       description: '',
       year: '',
-      edit: false
+      edit: true
     }
     this.editButton = this.editButton.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -47,8 +49,8 @@ class SingleRecordPlayer extends React.Component {
     await this.props.fetchSingleRecordPlayer(this.props.match.params.id)
   }
 
-  componentDidMount() {
-    this.props.fetchSingleRecordPlayer(this.props.match.params.id)
+  async componentDidMount() {
+    await this.props.fetchSingleRecordPlayer(this.props.match.params.id)
 
     if (this.props.singleRecordPlayer.recordplayer) {
       const {
@@ -64,10 +66,15 @@ class SingleRecordPlayer extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
+    if (this.props.user.id && this.props.user.id !== prevProps.user.id) {
+      await this.props.getCartInfo(this.props.user.id)
+      await this.props.fetchSingleRecordPlayer(this.props.match.params.id)
+    }
     if (
-      !prevProps.singleRecordPlayer.recordplayer &&
-      this.props.singleRecordPlayer.recordplayer
+      prevProps.singleRecordPlayer.recordplayer &&
+      prevProps.singleRecordPlayer.recordplayer !==
+        this.props.singleRecordPlayer.recordplayer
     ) {
       const {
         name,
@@ -83,7 +90,6 @@ class SingleRecordPlayer extends React.Component {
   }
 
   render() {
-    console.log('render', this.props)
     const record = this.props.singleRecordPlayer.recordplayer
     return !this.props.singleRecordPlayer.loading ? (
       <div className="singleRecord">
@@ -91,6 +97,13 @@ class SingleRecordPlayer extends React.Component {
           <div key={record.id} className="album">
             <img src={record.image} />
             <h1>{record.name}</h1>
+            <p>{record.price / 1000}</p>
+            <ComponentAddToCart
+              record={record}
+              cart={this.props.cart}
+              getCartInfo={this.props.getCartInfo}
+              isLoggedIn={!!this.props.user.id}
+            />
           </div>
         }{' '}
         {this.props.user.admin ? (
@@ -121,7 +134,8 @@ class SingleRecordPlayer extends React.Component {
 
 const mapState = state => ({
   singleRecordPlayer: state.singleRecordPlayerReducer,
-  user: state.user
+  user: state.user,
+  cart: state.cartReducer.cart[0]
 })
 
 const mapDispatch = (dispatch, {history}) => ({
@@ -130,7 +144,8 @@ const mapDispatch = (dispatch, {history}) => ({
   },
   editSingleRecordPlayer: id => {
     dispatch(editSingleRecordPlayer(id, history))
-  }
+  },
+  getCartInfo: id => dispatch(fetchCartInfo(id))
 })
 
 export const singleRecordPlayer = connect(mapState, mapDispatch)(

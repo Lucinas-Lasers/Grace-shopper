@@ -10,11 +10,9 @@ export const addToCart = props => {
     // Is the user logged in?
     if (props.isLoggedIn) {
       let copyArray = props.cart.products.slice()
-      let filterArray = copyArray.filter(product => {
-        if (product.id === props.record.id) {
-          return product
-        }
-      })
+      let filterArray = copyArray.filter(
+        product => product.id === props.record.id
+      )
       if (filterArray.length > 0) {
         await props.updateToCart({
           orderId: props.cart.id,
@@ -51,22 +49,6 @@ export const addToCart = props => {
         window.localStorage.setItem('cart', JSON.stringify(newCart))
       }
     }
-
-    // let arr = props.cart.filter(
-    //   (element) => element.productId === props.match.params.id
-    // )
-    // if (props.cart.productId === props.match.params.id)
-    //   const {id, price, qty} = props.cart
-    // qty = parseInt(qty) + 1
-    // props.updateCart({
-    //   ...props.order,
-    //   productId,
-    //   price,
-    //   qty,
-    // })
-
-    // props.updateCart()
-    // console.log(props)
   }
   return (
     <div>

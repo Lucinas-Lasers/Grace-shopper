@@ -9,7 +9,9 @@ class AllUsers extends React.Component {
   }
 
   render() {
-    return !this.props.user && this.props.allUsers[0] ? (
+    return this.props.user &&
+      this.props.user.admin &&
+      this.props.allUsers[0] ? (
       <div className="albumList">
         {this.props.allUsers.map(element => {
           return (
@@ -21,12 +23,15 @@ class AllUsers extends React.Component {
         })}
       </div>
     ) : (
-      <div>Loading...</div>
+      <div>ERROR! Unauthorized Access. Go back to Grace Hopper Mac</div>
     )
   }
 }
 
-const mapState = state => ({allUsers: state.allUsersReducer})
+const mapState = state => ({
+  allUsers: state.allUsersReducer,
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
   fetchAllUsers: () => {

@@ -25,7 +25,7 @@ export const editedSingleRecordPlayer = recordplayer => ({
   type: EDIT_SINGLE_RECORD_PLAYER,
   recordplayer
 })
-/**
+/*
  * THUNK CREATORS
  */
 

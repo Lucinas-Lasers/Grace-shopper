@@ -47,8 +47,8 @@ class SingleRecord extends React.Component {
     await this.props.fetchSingleRecord(this.props.match.params.id)
   }
 
-  componentDidMount() {
-    this.props.fetchSingleRecord(this.props.match.params.id)
+  async componentDidMount() {
+    await this.props.fetchSingleRecord(this.props.match.params.id)
     if (this.props.user.id) {
       this.props.getCartInfo(this.props.user.id)
     }
@@ -63,17 +63,21 @@ class SingleRecord extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.singleRecord.record && this.props.singleRecord.record) {
+  async componentDidUpdate(prevProps) {
+    if (this.props.user.id && this.props.user.id !== prevProps.user.id) {
+      await this.props.getCartInfo(this.props.user.id)
+      await this.props.fetchSingleRecord(this.props.match.params.id)
+    }
+    if (
+      prevProps.singleRecord.record &&
+      prevProps.singleRecord.record !== this.props.singleRecord.record
+    ) {
       const {name, description, year} = this.props.singleRecord.record
       this.setState({
         name,
         description,
         year
       })
-    }
-    if (this.props.user.id && this.props.user.id !== prevProps.user.id) {
-      this.props.getCartInfo(this.props.user.id)
     }
   }
 
@@ -89,7 +93,7 @@ class SingleRecord extends React.Component {
               <h1>{record.name}</h1>
               <h1>{record.artist}</h1>
               <p>{record.description}</p>
-              <p>{record.price}</p>
+              <p>{record.price / 1000}</p>
               {record.tracks.map((track, ind) => {
                 return <div key={ind}> {track}</div>
               })}
@@ -130,7 +134,7 @@ class SingleRecord extends React.Component {
 const mapState = state => ({
   singleRecord: state.singleRecordReducer,
   user: state.user,
-  cart: state.cartReducer
+  cart: state.cartReducer.cart[0]
 })
 
 const mapDispatch = dispatch => ({
