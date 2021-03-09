@@ -40,7 +40,7 @@ class Routes extends Component {
         <Route path="/recordplayer/:id" component={singleRecordPlayer} />
         <Route path="/users" component={allUsers} />
         <Route path="/admin" component={allProducts} />
-        <Route path="/home" component={UserHome} />
+        <Route path="/home" component={allProducts} />
         {isLoggedIn && this.props.user.admin ? (
           <Switch>{<Route path="/users" component={allUsers} />}</Switch>
         ) : (

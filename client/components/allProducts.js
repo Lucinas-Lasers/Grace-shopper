@@ -13,10 +13,11 @@ class AllProducts extends React.Component {
   }
 
   render() {
-    return !this.props.allRecordPlayers.loading ? (
+    return this.props.allRecords && !this.props.allRecords.loading ? (
       <div>
         <h1>ALBUMS</h1>
         <div className="productList">
+          {console.log(this.props)}
           {this.props.allRecords.records.map(element => {
             return (
               <div key={element.id} className="productCard">
