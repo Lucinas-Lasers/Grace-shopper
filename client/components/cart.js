@@ -206,46 +206,48 @@ class Cart extends React.Component {
         let productsStorage = this.props.guestProducts
 
         return (
-          <div className="cartList">
+          <div className="confirmationContainer">
             {console.log('2')}
             {productsStorage.map(product => {
               let item = product.data
               console.log(item.id, 'id')
               return (
-                <div className="cartItem" key={item.id}>
-                  <div>{item.name}</div>
+                <div className="confirmationItem" key={item.id}>
                   <img src={item.image} />
-                  <p>
-                    Price: {`$${(item.price / 1000).toFixed(2)}`}{' '}
-                    {`($${(
-                      item.price *
-                      this.state.localStorage[item.id].qty /
-                      1000
-                    ).toFixed(2)})`}
-                  </p>
-                  <div>
-                    <label htmlFor={item.name}>
-                      <small>Quantity</small>
-                    </label>
-                    <input
-                      name={item.name}
-                      type="number"
-                      value={this.state.localStorage[item.id].qty} // parse qty
-                      min="1"
-                      max={`${item.quantity}`}
-                      onChange={e => {
-                        this.localStorageChange(e, item.id)
-                      }}
-                    />
+                  <div className="confirmationRightContainer">
+                    <div>{item.name}</div>
+                    <p>
+                      Price: {`$${(item.price / 1000).toFixed(2)}`}{' '}
+                      {`($${(
+                        item.price *
+                        this.state.localStorage[item.id].qty /
+                        1000
+                      ).toFixed(2)})`}
+                    </p>
+                    <div>
+                      <label htmlFor={item.name}>
+                        <small>Quantity</small>
+                      </label>
+                      <input
+                        name={item.name}
+                        type="number"
+                        value={this.state.localStorage[item.id].qty} // parse qty
+                        min="1"
+                        max={`${item.quantity}`}
+                        onChange={e => {
+                          this.localStorageChange(e, item.id)
+                        }}
+                      />
+                    </div>
+                    <button
+                      id="remove"
+                      type="button"
+                      name={[item.id]}
+                      onClick={e => this.handleGuestSubmit(e)}
+                    >
+                      Remove Item
+                    </button>
                   </div>
-                  <button
-                    id="remove"
-                    type="button"
-                    name={[item.id]}
-                    onClick={e => this.handleGuestSubmit(e)}
-                  >
-                    Remove Item
-                  </button>
                 </div>
               )
             })}
