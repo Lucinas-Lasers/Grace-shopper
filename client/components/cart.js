@@ -22,13 +22,9 @@ class Cart extends React.Component {
     this.remove = this.remove.bind(this)
     this.handleGuestSubmit = this.handleGuestSubmit.bind(this)
   }
-  async componentDidMount() {
+  componentDidMount() {
     if (this.props.user.id) {
-      await this.props.getCartInfo(this.props.user.id)
-      this.setState({
-        orderId: this.props.cart.id,
-        products: this.props.cart.products
-      })
+      this.props.getCartInfo(this.props.user.id)
     } else if (!this.props.user.id && window.localStorage.getItem('cart')) {
       console.log('Componenet guest')
       let localStorage = JSON.parse(window.localStorage.getItem('cart'))
@@ -41,27 +37,29 @@ class Cart extends React.Component {
 
   async componentDidUpdate(prevProps) {
     if (this.props.user.id && this.props.user.id !== prevProps.user.id) {
-      await this.props.getCartInfo(this.props.user.id)
-      this.setState({
-        orderId: this.props.cart.id,
-        products: this.props.cart.products
-      })
+      this.props.getCartInfo(this.props.user.id)
     }
   }
 
   async remove(e) {
-    e.preventDefault()
+    console.log('hep', this.props.cart)
+    // e.preventDefault()
+    console.log('10', this.props.cart)
     await this.props.removeItem({
-      orderId: this.state.orderId,
+      orderId: this.props.cart.id,
       productId: e.target.name
     })
-    await this.props.getCartInfo(this.props.user.id)
+
+    console.log('11', this.props.cart)
+
+    // this.props.getCartInfo(this.props.user.id)
   }
 
   async handleChange(e, indx) {
     e.preventDefault()
     if (this.props.user) {
-      let item = this.state.products
+      let item = this.props.cart.products
+      console.log(item, 'helpppp')
       item[indx]['product-order'].qty = e.target.value
       item[indx]['product-order'].price =
         item[indx]['product-order'].qty * item[indx].price
@@ -92,15 +90,18 @@ class Cart extends React.Component {
   async handleSubmit(e) {
     e.preventDefault()
     const checkArray = []
-    this.state.products.forEach(product => {
+    this.props.cart.products.forEach(product => {
       if (product['product-order'].qty <= product.quantity) {
         return checkArray.push(product)
       }
     })
-    console.log('checkarray', this.state.products)
+    console.log('checkarray', this.props.cart.products)
 
-    if (checkArray.length && checkArray.length === this.state.products.length) {
-      await this.state.products.forEach(element => {
+    if (
+      checkArray.length &&
+      checkArray.length === this.props.cart.products.length
+    ) {
+      await this.props.cart.products.forEach(element => {
         this.props.buyCartItem({
           id: element.id,
           quantity: element['product-order'].qty
@@ -108,7 +109,7 @@ class Cart extends React.Component {
       })
 
       await this.props.orderFulfilled({
-        orderId: this.state.orderId,
+        orderId: this.props.cart.id,
         status: 'fulfilled',
         userId: this.props.user.id
       })

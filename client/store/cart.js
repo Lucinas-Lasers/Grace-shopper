@@ -106,8 +106,8 @@ export const removeItem = id => {
   return async dispatch => {
     try {
       const {data} = await axios.put(`api/order/remove/${id.orderId}`, id)
-      history.push('/cart')
       dispatch(removedItem(data))
+      history.push('/cart')
     } catch (err) {
       console.log(err)
     }
@@ -121,43 +121,34 @@ export default function cartReducer(state = initialState, action) {
     case GET_CART_INFO:
       return {...state, loading: false, cart: action.products}
     case ADD_TO_CART:
-      return {...state, cart: [...state.cart[0].products, action.item]}
+      state.cart[0].products = [...state.cart[0].products, action.item]
+      return {...state, cart: state.cart}
     case UPDATE_TO_CART:
+      state.cart[0].products = state.cart[0].products.map(product => {
+        if (product.id === action.item.id) {
+          return action.item
+        }
+      })
       return {
         ...state,
-        cart: [
-          state.cart[0].products.map(product => {
-            if (product.id === action.item.id) {
-              return action.item
-            }
-          })
-        ]
+        cart: state.cart
       }
     case BUY_CART_ITEM:
-      console.log('Before cart', state.cart)
       state.cart[0].products = state.cart[0].products.filter(product => {
-        console.log('product:', product, action.item)
-
         return product.id !== action.item.id
       })
-      console.log('After cart', state.cart)
-
       return {
         ...state,
         cart: state.cart
       }
     case REMOVE_ITEM:
+      state.cart[0].products = state.cart[0].products.filter(product => {
+        return product.id !== action.item.productId
+      })
       return {
         ...state,
-        cart: [
-          state.cart[0].products.filter(product => {
-            if (product.id !== action.item.id) {
-              return product
-            }
-          })
-        ]
+        cart: state.cart
       }
-
     default:
       return state
   }

@@ -13,7 +13,8 @@ class AllProducts extends React.Component {
   }
 
   render() {
-    return this.props.allRecords && !this.props.allRecords.loading ? (
+    return !this.props.allRecords.loading &&
+      !this.props.allRecordPlayers.loading ? (
       <div>
         <h1>ALBUMS</h1>
         <div className="productList">
