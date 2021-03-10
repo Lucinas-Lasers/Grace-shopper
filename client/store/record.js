@@ -35,16 +35,6 @@ export const fetchAllRecords = () => async dispatch => {
     console.log(err)
   }
 }
-
-export const deleteSingleRecord = id => async dispatch => {
-  try {
-    const {data} = await axios.delete(`/api/products/${id}`)
-    history.push('/records')
-    dispatch(deletedSingleRecord(data))
-  } catch (err) {
-    console.log(err)
-  }
-}
 /**
  * REDUCER
  */

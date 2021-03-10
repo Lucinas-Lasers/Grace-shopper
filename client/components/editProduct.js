@@ -17,7 +17,10 @@ const EditProduct = props => {
       <button
         id=""
         type="button"
-        onClick={() => props.deleteItem(props.product)}
+        onClick={() => {
+          props.deleteFromState(props.product, type)
+          props.deleteFromDb(props.product)
+        }}
       >
         Delete
       </button>

@@ -37,13 +37,6 @@ class AllRecordPlayers extends React.Component {
                     <h1>{element.name}</h1>
                   </div>
                 </Link>
-                {this.props.user && this.props.user.admin ? (
-                  <EditProduct
-                    deleteItem={this.props.deleteSingleRecordPlayer}
-                    product={element.id}
-                    type={element.type}
-                  />
-                ) : null}
               </div>
             </Link>
           )

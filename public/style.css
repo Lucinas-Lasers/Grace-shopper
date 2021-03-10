@@ -160,7 +160,7 @@ form div {
   align-content: center;
   justify-content: space-evenly;
   height: auto;
-  max-width: 225px;
+  max-width: 300px;
 }
 
 /* -----
@@ -190,7 +190,8 @@ SVG Icons - svgicons.sparkk.fr
   display: flex;
   background: grey;
   color: white;
-  width: 57px;
+  min-width: 57px;
+  max-width: 100px;
   height: 55px;
   padding: 0px 8px;
   justify-content: center;
@@ -201,6 +202,91 @@ SVG Icons - svgicons.sparkk.fr
 .navbarButton:hover {
   background: rgb(165, 165, 165);
   transition: background 0.5s;
+}
+
+/* Product bar */
+
+.containerHomepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+.featuredContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  width: 80vw;
+  height: 460px;
+}
+
+.featuredText {
+  height: 460px;
+  display: flex;
+  align-items: center;
+  width: 20vw;
+  background: grey;
+}
+
+.featuredText > h1 {
+  margin-left: 140px;
+  font-size: 5em;
+}
+
+.featuredObjectContainer {
+  display: flex;
+  align-items: center;
+  width: 60vw;
+  background: black;
+}
+
+.featuredObjectContainer img {
+  width: 460px;
+  height: 460px;
+}
+
+.featuredObjectContainer > h1 {
+  margin-left: 20px;
+  font-size: 5em;
+  color: white;
+}
+
+.productBarList {
+  display: flex;
+  width: 80vw;
+  background: rgb(78, 78, 78);
+  overflow: auto;
+}
+
+.productBarIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px 20px 10px 5px;
+  width: 170px;
+  height: 200px;
+  background: grey;
+  transition: background 0.5s;
+}
+
+.productBarIcon:hover {
+  background: rgb(167, 167, 167);
+  transition: background 0.5s;
+}
+
+.productBarIcon img {
+  width: 150px;
+  height: 150px;
+}
+.productBarIcon h5 {
+  margin: 5px 0px;
+  color: white;
+  width: 145px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* Product Cards */
@@ -334,4 +420,21 @@ td {
   border-width: 0px 1px 0px 0px;
   width: 250px;
   height: 250px;
+}
+
+/* admin */
+
+.adminUserItemContainer {
+  display: flex;
+  margin: 10px 10px;
+}
+
+.adminUserItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 10vw;
+  border: 4mm ridge rgb(165, 165, 165);
+  padding: 0px 10px;
+  margin: 10px 10px;
 }

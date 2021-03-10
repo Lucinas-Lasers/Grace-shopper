@@ -4,6 +4,7 @@
  * having to figure out which file they belong to!
  */
 import Cart from './cart'
+export {adminPage} from './adminPage'
 
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'

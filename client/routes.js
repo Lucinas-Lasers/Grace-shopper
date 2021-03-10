@@ -13,7 +13,8 @@ import {
   singleRecordPlayer,
   allUsers,
   allProducts,
-  confirmationPage
+  confirmationPage,
+  adminPage
 } from './components'
 import {me} from './store'
 import {fetchCartInfo} from './store/cart'
@@ -40,7 +41,7 @@ class Routes extends Component {
         <Route path="/recordplayers" component={allRecordPlayers} />
         <Route path="/recordplayer/:id" component={singleRecordPlayer} />
         <Route path="/users" component={allUsers} />
-        <Route path="/admin" component={allProducts} />
+        <Route path="/admin" component={adminPage} />
         <Route path="/confirmationpage" component={confirmationPage} />
         <Route path="/home" component={allProducts} />
         {isLoggedIn && this.props.user.admin ? (
