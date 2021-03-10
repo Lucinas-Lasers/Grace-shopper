@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
   <div className="navbar">
     <div className="navbarContainerLeft">
       <Link to="/home">
@@ -36,6 +36,11 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <a href="#" onClick={handleClick} className="navbarButton">
             Logout
           </a>
+          {isAdmin ? (
+            <Link to="/admin">
+              <div className="navbarButton">Admin Panel</div>
+            </Link>
+          ) : null}
           <Link to="/cart">
             <div className="navbarButton">
               <svg className="svg-icon" viewBox="0 0 20 20">
@@ -87,7 +92,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: state.user.admin
   }
 }
 

@@ -13,46 +13,73 @@ class AllProducts extends React.Component {
   }
 
   render() {
+    let randomObject = {}
+    if (!this.props.allRecords.loading) {
+      randomObject = this.props.allRecords.records[
+        Math.floor(
+          Math.random() * Math.floor(this.props.allRecords.records.length - 1)
+        )
+      ]
+    }
+
     return !this.props.allRecords.loading &&
       !this.props.allRecordPlayers.loading ? (
-      <div>
-        <h1>ALBUMS</h1>
-        <div className="productList">
-          {this.props.allRecords.records.map(element => {
-            return (
-              <Link key={element.id} to={`/record/${element.id}`}>
-                <div className="productCard">
-                  <Link to={`/record/${element.id}`}>
-                    <div className="productCardItems">
-                      <img src={element.image} />
-                      <h2>{element.name}</h2>
-                      <p>{element.artist}</p>
-                    </div>
-                  </Link>
-                </div>
-              </Link>
-            )
-          })}
+      <div className="containerHomepage">
+        <div className="featuredContainer">
+          <div className="featuredText">
+            <h1>
+              Best
+              <br />
+              Selling
+              <br />
+              Album
+            </h1>
+          </div>
+
+          <Link
+            to={`/record/${randomObject.id}`}
+            className="featuredObjectContainer"
+          >
+            <img src={randomObject.image} />
+            <h1>{randomObject.name}</h1>
+          </Link>
         </div>
-        <h1>RECORD PLAYERS</h1>
-        <div className="productList">
-          {this.props.allRecordPlayers.recordplayers.map(element => {
-            return (
-              <Link key={element.id} to={`/recordplayer/${element.id}`}>
-                <div className="productCard">
+        <div>
+          <h1>Albums</h1>
+          <div className="productBarList">
+            {this.props.allRecords.records.map(element => {
+              return (
+                <Link
+                  to={`/record/${element.id}`}
+                  key={element.id}
+                  className="productBarIcon"
+                >
+                  <img src={element.image} />
+                  <h5>{element.name}</h5>
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="containerHomepage">
+          <div>
+            <h1>Record Players</h1>
+            <div className="productBarList">
+              {this.props.allRecordPlayers.recordplayers.map(element => {
+                return (
                   <Link
+                    key={element.id}
                     to={`/recordplayer/${element.id}`}
-                    className="productCardItems"
+                    className="productBarIcon"
                   >
-                    <div>
-                      <img src={element.image} />
-                      <h1>{element.name}</h1>
-                    </div>
+                    <img src={element.image} />
+                    <h5>{element.name}</h5>
                   </Link>
-                </div>
-              </Link>
-            )
-          })}
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
     ) : (

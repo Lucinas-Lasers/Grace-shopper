@@ -32,15 +32,6 @@ class AllRecords extends React.Component {
                     <p>{element.artist}</p>
                   </div>
                 </Link>
-                {this.props.user && this.props.user.admin ? (
-                  <EditProduct
-                    deleteItem={this.props.deleteSingleRecord}
-                    product={element.id}
-                    type={element.type}
-                  />
-                ) : (
-                  <div />
-                )}
               </div>
             </Link>
           )

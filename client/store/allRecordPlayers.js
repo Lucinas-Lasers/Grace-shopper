@@ -38,15 +38,6 @@ export const fetchAllRecordPlayers = () => async dispatch => {
     console.error(err)
   }
 }
-export const deleteSingleRecordPlayer = id => async dispatch => {
-  try {
-    const {data} = await axios.delete(`/api/products/${id}`)
-    history.push(`/recordplayers`)
-    dispatch(deletedSingleRecordPlayer(data))
-  } catch (err) {
-    console.error(err)
-  }
-}
 
 /**
  * REDUCER
