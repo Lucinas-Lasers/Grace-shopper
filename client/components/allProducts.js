@@ -17,33 +17,39 @@ class AllProducts extends React.Component {
       <div>
         <h1>ALBUMS</h1>
         <div className="productList">
-          {console.log(this.props)}
           {this.props.allRecords.records.map(element => {
             return (
-              <div key={element.id} className="productCard">
-                <Link to={`/record/${element.id}`}>
-                  <div className="productCardItems">
-                    <img src={element.image} />
-                    <h2>{element.name}</h2>
-                    <p>{element.artist}</p>
-                  </div>
-                </Link>
-              </div>
+              <Link key={element.id} to={`/record/${element.id}`}>
+                <div className="productCard">
+                  <Link to={`/record/${element.id}`}>
+                    <div className="productCardItems">
+                      <img src={element.image} />
+                      <h2>{element.name}</h2>
+                      <p>{element.artist}</p>
+                    </div>
+                  </Link>
+                </div>
+              </Link>
             )
           })}
         </div>
         <h1>RECORD PLAYERS</h1>
-        <div className="albumList">
+        <div className="productList">
           {this.props.allRecordPlayers.recordplayers.map(element => {
             return (
-              <div key={element.id} className="album">
-                <Link to={`/recordplayer/${element.id}`}>
-                  <div>
-                    <img src={element.image} />
-                    <h1>{element.name}</h1>
-                  </div>
-                </Link>
-              </div>
+              <Link key={element.id} to={`/recordplayer/${element.id}`}>
+                <div className="productCard">
+                  <Link
+                    to={`/recordplayer/${element.id}`}
+                    className="productCardItems"
+                  >
+                    <div>
+                      <img src={element.image} />
+                      <h1>{element.name}</h1>
+                    </div>
+                  </Link>
+                </div>
+              </Link>
             )
           })}
         </div>

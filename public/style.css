@@ -220,9 +220,13 @@ SVG Icons - svgicons.sparkk.fr
 }
 
 .productCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   background-color: #7a7a7a;
-  width: 170px;
-  height: 250px;
+  width: 200px;
+  height: 285px;
   margin: 25px 15px;
   box-shadow: 0px 0px 3px 1px black;
   transition: background 0.5s;
@@ -237,11 +241,17 @@ SVG Icons - svgicons.sparkk.fr
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 200px;
 }
 
 .productCardItems * {
   margin: 8px 0px;
+  font-size: 1em;
   color: white;
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .productCardItems > img {

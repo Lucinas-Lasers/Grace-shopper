@@ -23,24 +23,29 @@ class AllRecordPlayers extends React.Component {
 
   render() {
     return !this.props.allRecordPlayers.loading ? (
-      <div className="albumList">
+      <div className="productList">
         {this.props.allRecordPlayers.recordplayers.map(element => {
           return (
-            <div key={element.id} className="album">
-              <Link to={`/recordplayer/${element.id}`}>
-                <div>
-                  <img src={element.image} />
-                  <h1>{element.name}</h1>
-                </div>
-              </Link>
-              {this.props.user && this.props.user.admin ? (
-                <EditProduct
-                  deleteItem={this.props.deleteSingleRecordPlayer}
-                  product={element.id}
-                  type={element.type}
-                />
-              ) : null}
-            </div>
+            <Link key={element.id} to={`/recordplayer/${element.id}`}>
+              <div className="productCard">
+                <Link
+                  to={`/recordplayer/${element.id}`}
+                  className="productCardItems"
+                >
+                  <div>
+                    <img src={element.image} />
+                    <h1>{element.name}</h1>
+                  </div>
+                </Link>
+                {this.props.user && this.props.user.admin ? (
+                  <EditProduct
+                    deleteItem={this.props.deleteSingleRecordPlayer}
+                    product={element.id}
+                    type={element.type}
+                  />
+                ) : null}
+              </div>
+            </Link>
           )
         })}
       </div>
