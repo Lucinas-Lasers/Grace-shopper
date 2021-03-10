@@ -138,28 +138,32 @@ class Cart extends React.Component {
       if (this.props.cart.products && this.props.cart.products.length) {
         // if user has items in cart
         return (
-          <div className="cartList">
+          <div className="confirmationContainer">
             {this.props.cart.products.map((item, indx) => {
               return (
-                <div className="cartItem" key={item.id}>
-                  <div>{item.name}</div>
+                <div className="confirmationItem" key={item.id}>
                   <img src={item.image} />
-                  <div>
-                    <label htmlFor={item.name}>
-                      <small>Quantity</small>
-                    </label>
-                    <input
-                      name={item.name}
-                      type="number"
-                      min="0"
-                      value={item['product-order'].qty}
-                      onChange={e => this.handleChange(e, indx)}
-                    />
-                  </div>
-                  <div>Price: {(item.price / 1000).toFixed(2)}</div>
-                  <div>
-                    Total Price:{' '}
-                    {(item['product-order'].qty * item.price / 1000).toFixed(2)}
+                  <div className="confirmationRightContainer">
+                    <div>{item.name}</div>
+                    <div>
+                      <label htmlFor={item.name}>
+                        <small>Quantity</small>
+                      </label>
+                      <input
+                        name={item.name}
+                        type="number"
+                        min="0"
+                        value={item['product-order'].qty}
+                        onChange={e => this.handleChange(e, indx)}
+                      />
+                    </div>
+                    <div>Price: {(item.price / 1000).toFixed(2)}</div>
+                    <div>
+                      Total Price:{' '}
+                      {(item['product-order'].qty * item.price / 1000).toFixed(
+                        2
+                      )}
+                    </div>
                     <button
                       id="remove"
                       type="button"
